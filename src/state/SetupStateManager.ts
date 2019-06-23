@@ -17,6 +17,10 @@ export default class SetupStateManager {
         localStorage[this.localStorageKey] = JSON.stringify(value);
     }
 
+    public get selectedCharacters(): Array<CharacterSetupState> {
+        return this.state.characters.filter((element) => element.isSelected);
+    }
+
     public getStateForCharacter(name: string): CharacterSetupState {
         const character = this.state.characters.find((element) => element.name === name);
         if (character !== undefined) {
