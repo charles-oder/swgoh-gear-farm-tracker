@@ -33,20 +33,20 @@ export default class CharacterListView extends Vue {
     private stateManager = new SetupStateManager();
     private hideUnselected: boolean = false;
 
-    private characters(): string[] {
-        if (this.hideUnselected) {
-            return this.stateManager.selectedCharacters.map((element) => element.name);
-        }
-        return this.characterList.characterNames;
-    }
-
     public mounted() {
         this.hideUnselected = this.stateManager.hideUnselected;
     }
 
     @Watch('hideUnselected')
     public hideUnselectedChanged(newValue: boolean, oldValue: boolean) {
-        this.stateManager.hideUnselected = newValue
+        this.stateManager.hideUnselected = newValue;
+    }
+
+    private characters(): string[] {
+        if (this.hideUnselected) {
+            return this.stateManager.selectedCharacters.map((element) => element.name);
+        }
+        return this.characterList.characterNames;
     }
 }
 </script>

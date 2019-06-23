@@ -16248,7 +16248,7 @@
             "image": "/game-asset/g/123Component/",
             "url": "//swgoh.gg/db/gear/123Component/mk-8-neuro-saav-electrobinoculars-component/",
             "ingredients": [],
-            "name": "MK 8 Neuro-Saav Electrobinoculars Component"
+            "name": "Mk 8 Neuro-Saav Electrobinoculars Component"
         },
         {
             "base_id": "139Salvage",
@@ -17062,7 +17062,7 @@
             "image": "/game-asset/g/123Salvage/",
             "url": "//swgoh.gg/db/gear/123Salvage/mk-8-neuro-saav-electrobinoculars-salvage/",
             "ingredients": [],
-            "name": "MK 8 Neuro-Saav Electrobinoculars Salvage"
+            "name": "Mk 8 Neuro-Saav Electrobinoculars Salvage"
         },
         {
             "base_id": "135Salvage",
@@ -19360,7 +19360,7 @@
             "image": "/game-asset/g/073PrototypeSalvage/",
             "url": "//swgoh.gg/db/gear/073PrototypeSalvage/mk-7-blastech-weapon-mod-prototype-salvage/",
             "ingredients": [],
-            "name": "MK 7 BlasTech Weapon Mod Prototype Salvage"
+            "name": "Mk 7 BlasTech Weapon Mod Prototype Salvage"
         },
         {
             "base_id": "075PrototypeSalvage",

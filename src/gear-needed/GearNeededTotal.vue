@@ -61,9 +61,9 @@ export default class GearNeededPerCharacterView extends Vue {
     private flattenGearIngredients(input: GearIngredient[]): GearIngredient[] {
         let list: GearIngredient[] = [];
         input.forEach((item) => {
-            let existingEntry = list.find((element) => element.name === item.name)
+            const existingEntry = list.find((element) => element.name === item.name);
             if (existingEntry === undefined) {
-                list.push(item)
+                list.push(item);
                 return;
             }
             existingEntry.amount += item.amount;

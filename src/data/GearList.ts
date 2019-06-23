@@ -41,7 +41,8 @@ export class GearList {
     }
 
     public allGearNames(): string[] {
-        const allNames = this.gear.map((element) => element.name);
+        const baseComponents = this.gear.filter((element) => element.ingredients.length === 0);
+        const allNames = baseComponents.map((element) => element.name);
         const uniqueNames = new Set(allNames);
         return Array.from(uniqueNames).sort();
     }
@@ -51,13 +52,10 @@ export class GearList {
             return 0;
         }
         const gearEntry = gearLocations.gearList.find((element) => element.name === name);
-        if (gearEntry === undefined) {
+        if (gearEntry === undefined || gearEntry.cheapestLocations.length < 1) {
             return 0;
         }
-        const cheapestLocation = gearEntry.cheapestLocations.first();
-        if (cheapestLocation === undefined) {
-            return 0;
-        }
+        const cheapestLocation = gearEntry.cheapestLocations[0];
         return cheapestLocation.amount;
     }
 

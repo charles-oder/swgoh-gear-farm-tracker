@@ -16,44 +16,44 @@
 </template>
 
 <script lang="ts">
-    import {Component, Prop, Vue} from "vue-property-decorator";
-    import CharacterSetupView from '@/CharacterList/CharacterSetupView.vue';
-    import SetupStateManager from '../state/SetupStateManager';
-    import GearOnHandState from '@/state/GearOnHandState';
-    import {GearList} from '@/data/GearList';
+import {Component, Prop, Vue} from 'vue-property-decorator';
+import CharacterSetupView from '@/CharacterList/CharacterSetupView.vue';
+import SetupStateManager from '../state/SetupStateManager';
+import GearOnHandState from '@/state/GearOnHandState';
+import {GearList} from '@/data/GearList';
 
-    @Component({
-        components: {
-            CharacterSetupView,
+@Component({
+    components: {
+        CharacterSetupView,
 
-        },
-    })
-    export default class FarmListLineItem extends Vue {
+    },
+})
+export default class FarmListLineItem extends Vue {
 
-        @Prop() public name?: string;
-        @Prop() public amount?: number;
+    @Prop() public name?: string;
+    @Prop() public amount?: number;
 
-        private state: GearOnHandState = new GearOnHandState('');
+    private state: GearOnHandState = new GearOnHandState('');
 
-        private stateManager = new SetupStateManager();
-        private gearList = new GearList();
+    private stateManager = new SetupStateManager();
+    private gearList = new GearList();
 
-        public mounted() {
-            if (this.name === undefined) {
-                return;
-            }
-            this.state = this.stateManager.getStateForGear(this.name);
+    public mounted() {
+        if (this.name === undefined) {
+            return;
         }
-
-        private stateChanged() {
-            this.stateManager.setStateForGear(this.state);
-        }
-
-        private farmingLocations(): string {
-            return this.gearList.getCheapestLocationsForGear(this.name);
-        }
-
+        this.state = this.stateManager.getStateForGear(this.name);
     }
+
+    private stateChanged() {
+        this.stateManager.setStateForGear(this.state);
+    }
+
+    private farmingLocations(): string {
+        return this.gearList.getCheapestLocationsForGear(this.name);
+    }
+
+}
 </script>
 <style scoped lang="scss">
     .gear-listing {
