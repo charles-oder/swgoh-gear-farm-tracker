@@ -1,7 +1,7 @@
 <template>
     <div class="gear-listing">
         <div class="gear-name-row">
-            <div class="amount">{{amount}}</div><div class="name">{{name}}</div>
+            <div class="amount">{{displayAmount()}}</div><div class="name">{{name}}</div>
         </div>
         <div class="on-hand-row">
             <label>
@@ -34,6 +34,7 @@ export default class FarmListLineItem extends Vue {
     @Prop() public amount?: number;
 
     private state: GearOnHandState = new GearOnHandState('');
+    private originalState: GearOnHandState = new GearOnHandState('');
 
     private stateManager = new SetupStateManager();
     private gearList = new GearList();
@@ -43,6 +44,13 @@ export default class FarmListLineItem extends Vue {
             return;
         }
         this.state = this.stateManager.getStateForGear(this.name);
+        this.originalState = new GearOnHandState(this.state.name);
+        this.originalState.amount = this.state.amount;
+    }
+
+    private displayAmount(): number {
+        const diff =  this.originalState.amount -this.state.amount;
+        return (this.amount ? this.amount : 0) + diff;
     }
 
     private stateChanged() {
