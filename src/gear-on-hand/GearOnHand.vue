@@ -4,7 +4,7 @@
         <div class="list-container">
             <ul>
                 <li v-for="gear in allGearNames()" :key="gear">
-                    <GearOnHandLineItem :gearName="gear" />
+                    <GearOnHandLineItem :gearName="gear"/>
                 </li>
             </ul>
         </div>
@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import {Component, Vue} from 'vue-property-decorator';
 import SetupStateManager from '../state/SetupStateManager';
 import {GearList} from '@/data/GearList';
 import GearOnHandLineItem from '@/gear-on-hand/GearOnHandLineItem.vue';
@@ -29,7 +29,7 @@ export default class GearOnHand extends Vue {
     public allGearNames(): string[] {
         return this.gearList.allGearNames();
     }
- }
+}
 </script>
 
 <style scoped lang="scss">
@@ -38,9 +38,11 @@ export default class GearOnHand extends Vue {
         list-style: none;
         padding-left: 0;
     }
+
     h1 {
         color: #666;
     }
+
     .gear-on-hand-list {
         width: 100%;
     }

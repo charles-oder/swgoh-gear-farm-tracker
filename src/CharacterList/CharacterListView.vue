@@ -1,22 +1,22 @@
 <template>
-  <div class="character-list">
-      <h1>Character List</h1>
-      <div>
-          <label>
-              Hide Unselected
-              <input v-model="hideUnselected" type="checkbox" />
-          </label>
-      </div>
-      <ul>
+    <div class="character-list">
+        <h1>Character List</h1>
+        <div>
+            <label>
+                Hide Unselected
+                <input v-model="hideUnselected" type="checkbox"/>
+            </label>
+        </div>
+        <ul>
             <li v-for="character in characters()" :key="character">
                 <CharacterSetupView :characterName="character"/>
             </li>
-      </ul>
-  </div>
+        </ul>
+    </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop, Watch } from 'vue-property-decorator';
+import {Component, Vue, Prop, Watch} from 'vue-property-decorator';
 import CharacterList from '@/CharacterList/CharacterList';
 import CharacterSetupView from '@/CharacterList/CharacterSetupView.vue';
 import SetupStateManager from '@/state/SetupStateManager';
@@ -60,6 +60,7 @@ export default class CharacterListView extends Vue {
         margin-left: 50%;
         transform: translateX(-50%);
     }
+
     h1 {
         color: #666;
     }

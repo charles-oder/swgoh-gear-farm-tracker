@@ -1,7 +1,8 @@
 <template>
     <div class="gear-listing">
         <div class="gear-name-row">
-            <div class="amount">{{displayAmount()}}</div><div class="name">{{name}}</div>
+            <div class="amount">{{displayAmount()}}</div>
+            <div class="name">{{name}}</div>
         </div>
         <div class="on-hand-row">
             <label>
@@ -49,7 +50,7 @@ export default class FarmListLineItem extends Vue {
     }
 
     private displayAmount(): number {
-        const diff =  this.originalState.amount -this.state.amount;
+        const diff = this.originalState.amount - this.state.amount;
         return (this.amount ? this.amount : 0) + diff;
     }
 
@@ -73,26 +74,32 @@ export default class FarmListLineItem extends Vue {
         text-align: left;
         padding: 10px;
     }
+
     .amount {
         display: inline-block;
         font-weight: bold;
         margin-right: 1em;
     }
+
     .name {
         display: inline-block;
     }
+
     .gear-name-row {
         padding: 0.2em;
     }
+
     .on-hand-row {
         padding: 0.2em;
     }
+
     .on-hand-row input {
         width: 4em;
         text-align: right;
         position: relative;
         top: -2px;
     }
+
     .location-row {
         padding: 0 3px;
         font-size: 0.8em;

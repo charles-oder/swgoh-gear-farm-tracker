@@ -7,7 +7,8 @@
                     <h2>{{character}}</h2>
                     <ul class="gear-list">
                         <li v-for="gearSlot in flattenGearList(character)" :key="gearSlot.name">
-                            <div class="amount">{{gearSlot.amount}}</div> {{gearSlot.name}}
+                            <div class="amount">{{gearSlot.amount}}</div>
+                            {{gearSlot.name}}
                         </li>
                     </ul>
                 </li>
@@ -17,7 +18,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import {Component, Vue} from 'vue-property-decorator';
 import CharacterSetupView from '@/CharacterList/CharacterSetupView.vue';
 import SetupStateManager from '../state/SetupStateManager';
 import CharacterList from '@/CharacterList/CharacterList';
@@ -85,9 +86,11 @@ export default class GearNeededPerCharacterView extends Vue {
         list-style: none;
         padding-left: 0;
     }
+
     h1 {
         color: #666;
     }
+
     .character-list {
         width: 100%;
     }
@@ -98,9 +101,11 @@ export default class GearNeededPerCharacterView extends Vue {
         margin-left: 50%;
         transform: translateX(-50%);
     }
+
     .gear-list li {
         padding: 0.2em;
     }
+
     .amount {
         font-weight: bold;
         display: inline-block;

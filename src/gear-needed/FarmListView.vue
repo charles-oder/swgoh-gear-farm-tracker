@@ -3,14 +3,14 @@
         <h1>Gear to Farm</h1>
         <ul>
             <li v-for="gearSlot in allNeededGear()" :key="gearSlot.name">
-                <FarmListLineItem :name="gearSlot.name" :amount="gearSlot.amount" />
+                <FarmListLineItem :name="gearSlot.name" :amount="gearSlot.amount"/>
             </li>
         </ul>
     </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import {Component, Vue} from 'vue-property-decorator';
 import CharacterSetupView from '@/CharacterList/CharacterSetupView.vue';
 import SetupStateManager from '../state/SetupStateManager';
 import CharacterList from '@/CharacterList/CharacterList';
@@ -58,7 +58,7 @@ export default class FarmListView extends Vue {
 
     private allNeededGear(): GearIngredient[] {
         const list: GearIngredient[] = [];
-        this.characters.forEach((character) => list.push(... this.getMissingGearSlots(character)));
+        this.characters.forEach((character) => list.push(...this.getMissingGearSlots(character)));
         return this.subtractGearOnHand(this.flattenGearIngredients(list), this.gearOnHand())
             .sort((a, b) => b.amount - a.amount);
     }
@@ -110,6 +110,7 @@ export default class FarmListView extends Vue {
         margin-left: 50%;
         transform: translateX(-50%);
     }
+
     h1 {
         color: #666;
     }

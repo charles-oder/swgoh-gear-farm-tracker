@@ -39,6 +39,7 @@ export default class GearOnHand extends Vue {
     input {
         width: 4em;
     }
+
     .gear-on-hand-line-item {
         text-align: left;
         padding: 0.2em;
