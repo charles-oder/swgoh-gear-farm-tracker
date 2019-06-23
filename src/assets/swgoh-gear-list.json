@@ -21449,6 +21449,11 @@
             "url": "//swgoh.gg/db/gear/021Prototype/mk-1-chiewab-hypo-syringe-prototype/",
             "ingredients": [],
             "name": "Mk 1 Chiewab Hypo Syringe Prototype"
+        },
+        {
+            "base_id": "Mk10NeuroSaavElectrobinocularsSalvage",
+            "ingredients": [],
+            "name": "Mk 10 Neuro-Saav Electrobinoculars Salvage"
         }
     ]
 }

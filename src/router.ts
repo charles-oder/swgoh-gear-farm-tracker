@@ -38,6 +38,14 @@ export default new Router({
       component: () => import(/* webpackChunkName: "about" */ './gear-needed/GearNeededTotal.vue'),
     },
     {
+      path: '/farm-list',
+      name: 'gear needed total',
+      // route level code-splitting
+      // this generates a separate chunk (about.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import(/* webpackChunkName: "about" */ './gear-needed/FarmListView.vue'),
+    },
+    {
       path: '/gear-on-hand',
       name: 'gear on hand',
       // route level code-splitting

@@ -1,7 +1,9 @@
 import data from '@/assets/swgoh-gear-list.json';
+import locationData from '@/assets/swgoh-gear-locations.json';
 import {GearIngredient} from '@/data/GearIngredient';
 
 const gearData: IGearListData = data as IGearListData;
+const gearLocations: IGearLocationData = locationData as IGearLocationData;
 
 export class GearList {
 
@@ -43,6 +45,42 @@ export class GearList {
         const uniqueNames = new Set(allNames);
         return Array.from(uniqueNames).sort();
     }
+
+    public getMinimumCostForGear(name: string): number {
+        if (name === undefined) {
+            return 0;
+        }
+        const gearEntry = gearLocations.gearList.find((element) => element.name === name);
+        if (gearEntry === undefined) {
+            return 0;
+        }
+        const cheapestLocation = gearEntry.cheapestLocations.first();
+        if (cheapestLocation === undefined) {
+            return 0;
+        }
+        return cheapestLocation.amount;
+    }
+
+    public getCheapestLocationsForGear(name: string): string {
+        if (name === undefined) {
+            return 'None';
+        }
+        const gearEntry = gearLocations.gearList.find((element) => element.name === name);
+        if (gearEntry === undefined) {
+            return 'No Locations Found';
+        }
+        let output = '';
+        gearEntry.cheapestLocations.forEach((element) => {
+            if (output.length > 0) {
+                output += ', ';
+            }
+            output += element.name;
+        });
+        if (output === '') {
+            return 'Raid Only';
+        }
+        return output;
+    }
 }
 
 interface IGearListData {
@@ -58,4 +96,19 @@ interface IGearEntry {
 interface IIngredient {
     gear: string;
     amount: number;
+}
+
+interface IGearLocationData {
+    gearList: IGearLocationEntry[];
+}
+
+interface IGearLocationEntry {
+    name: string;
+    locations: ILocation[];
+    cheapestLocations: ILocation[];
+}
+
+interface ILocation {
+    name: string;
+    cost: number;
 }

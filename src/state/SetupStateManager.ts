@@ -53,4 +53,8 @@ export default class SetupStateManager {
         state.gearOnHand = listings;
         this.state = state;
     }
+
+    public getAllGearOnHand(): GearOnHandState[] {
+        return this.state.gearOnHand;
+    }
 }
