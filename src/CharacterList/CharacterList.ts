@@ -21,13 +21,16 @@ export default class CharacterList {
     public gearIdForCharacter(name: string, level: number, slot: number): string | undefined {
         const character = this.characters.find((element) => element.name === name);
         if (character === undefined) {
+            alert('Character not found: ' + name);
             return undefined;
         }
-        const gearLevel = character.gear_levels.find((element) => element.tier === level);
+        const gearLevel = character.gear_levels.find((element) => +element.tier === +level);
         if (gearLevel === undefined) {
+            alert('Gear Level not found: ' + level + '\n' + JSON.stringify(character.gear_levels));
             return undefined;
         }
         if (slot > gearLevel.gear.length || slot < 1) {
+            alert('Gear Slot not found: ' + slot);
             return undefined;
         }
         return gearLevel.gear[slot - 1];

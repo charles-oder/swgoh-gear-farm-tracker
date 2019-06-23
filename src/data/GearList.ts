@@ -24,6 +24,17 @@ export class GearList {
         return gearEntry.ingredients.map((element) => this.createGearIngredient(element));
     }
 
+    public ingredientsForGearNamed(name: string): GearIngredient[] {
+        if (name === undefined) {
+            return [];
+        }
+        const gearEntry = this.gear.find((element) => element.name === name);
+        if (gearEntry === undefined) {
+            return [];
+        }
+        return gearEntry.ingredients.map((element) => this.createGearIngredient(element));
+    }
+
     public createGearIngredient(item: IIngredient): GearIngredient {
         const name = this.nameForId(item.gear);
         return new GearIngredient(name ? name : item.gear, item.amount);

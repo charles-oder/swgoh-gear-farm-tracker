@@ -10,10 +10,24 @@
             <router-link to="/gear-needed-per-character">Gear Needed/Character</router-link>
             |
             <router-link to="/gear-needed-total">Total Gear Needed</router-link>
+            <ModalDialog />
         </div>
         <router-view/>
     </div>
 </template>
+
+<script lang="ts">
+    import {Component, Prop, Vue} from 'vue-property-decorator';
+    import ModalDialog from '@/views/ModalDialog.vue';
+    @Component({
+        components: {
+            ModalDialog,
+        },
+    })
+    export default class App extends Vue {
+
+    }
+</script>
 
 <style lang="scss">
     #app {

@@ -42,7 +42,7 @@ export default class GearNeededPerCharacterView extends Vue {
 
         for (let i = +character.currentGearLevel; i < +character.targetGearLevel; i++) {
             for (let j = 1; j <= 6; j++) {
-                if (i === +character.currentGearLevel && character.gearItems[j]) {
+                if (i === +character.currentGearLevel && character.gearItems[j - 1]) {
                     continue;
                 }
                 const gearId = this.characterList.gearIdForCharacter(character.name, i, j);
