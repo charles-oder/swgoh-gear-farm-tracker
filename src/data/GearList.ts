@@ -65,7 +65,7 @@ export class GearList {
         }
         const gearEntry = gearLocations.gearList.find((element) => element.name === name);
         if (gearEntry === undefined) {
-            return 'No Locations Found';
+            return 'Raid Only';
         }
         let output = '';
         gearEntry.cheapestLocations.forEach((element) => {
