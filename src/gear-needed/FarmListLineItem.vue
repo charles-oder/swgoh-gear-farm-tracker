@@ -4,7 +4,10 @@
             {{amount}} {{name}}
         </div>
         <div>
-            <input v-model="state.amount" type="number" v-on:change="stateChanged"/>
+            <label>
+                On Hand:
+                <input v-model="state.amount" type="number" v-on:change="stateChanged"/>
+            </label>
         </div>
         <div>
             {{farmingLocations()}}
@@ -43,7 +46,7 @@
         }
 
         private stateChanged() {
-            //this.stateManager.setStateForGear(this.state);
+            this.stateManager.setStateForGear(this.state);
         }
 
         private farmingLocations(): string {

@@ -1,9 +1,9 @@
 <template>
     <div class="ger-on-hand-line-item">
         <label>
+            {{gearName}}:
             <input v-model="state.amount" v-on:change="stateChanged" type="number"/>
         </label>
-        {{gearName}}
     </div>
 </template>
 
