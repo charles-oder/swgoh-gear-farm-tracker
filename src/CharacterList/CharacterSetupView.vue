@@ -45,7 +45,7 @@
 
         @Prop() public characterName?: string;
 
-        private validGearLevels = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+        private validGearLevels = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
         private state: CharacterSetupState = new CharacterSetupState('');
         private stateManager = new SetupStateManager();
 
@@ -60,9 +60,6 @@
         }
 
         private stateChanged() {
-            if (this.state.targetGearLevel < this.state.currentGearLevel) {
-                this.state.targetGearLevel = this.state.currentGearLevel;
-            }
             this.stateManager.setStateForCharacter(this.state);
         }
 

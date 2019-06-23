@@ -17,6 +17,21 @@ export default class CharacterList {
 
         this.characterNames = characterData.data.map((element) => element.name);
     }
+
+    public gearIdForCharacter(name: string, level: number, slot: number): string | undefined {
+        const character = this.characters.find((element) => element.name === name);
+        if (character === undefined) {
+            return undefined;
+        }
+        const gearLevel = character.gear_levels.find((element) => element.tier === level);
+        if (gearLevel === undefined) {
+            return undefined;
+        }
+        if (slot > gearLevel.gear.length || slot < 1) {
+            return undefined;
+        }
+        return gearLevel.gear[slot - 1];
+    }
 }
 
 interface ICharacterData {
@@ -25,4 +40,10 @@ interface ICharacterData {
 
 interface ICharacter {
     name: string;
+    gear_levels: Array<IGearLevel>;
+}
+
+interface IGearLevel {
+    tier: number;
+    gear: Array<string>;
 }
