@@ -8,7 +8,6 @@
           </label>
       </div>
       <ul>
-            <li><div>Selected</div><div>Name</div><div>Gear Level</div><div>Target Gear Level</div><div>Gear Equipped</div></li>
             <li v-for="character in characters()" :key="character">
                 <CharacterSetupView :characterName="character"/>
             </li>
@@ -51,3 +50,15 @@ export default class CharacterListView extends Vue {
     }
 }
 </script>
+
+<style scoped lang="scss">
+
+    ul {
+        list-style: none;
+        padding-left: 0;
+    }
+    h1 {
+        color: #666;
+    }
+
+</style>

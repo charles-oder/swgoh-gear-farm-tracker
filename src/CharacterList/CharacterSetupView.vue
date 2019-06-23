@@ -1,20 +1,30 @@
 <template>
     <div class="character-listing">
-        <input v-model="state.isSelected" v-on:change="stateChanged" type="checkbox"/>
-        <div>
-            {{characterName}}
+        <div class="left-pane">
+            <div class="name-section">
+                <label>
+                    <input v-model="state.isSelected" v-on:change="stateChanged" type="checkbox"/>
+                    {{characterName}}
+                </label>
+            </div>
+            <div class="gear-level-selector">
+                <label>
+                    Current GL:
+                    <select v-model="state.currentGearLevel" v-on:change="stateChanged" >
+                        <option v-for="gl in validGearLevels" :key="gl">{{gl}}</option>
+                    </select>
+                </label>
+                <label>
+                    Target GL:
+                    <select v-model="state.targetGearLevel" v-on:change="stateChanged" >
+                        <option v-for="gl in validTargetGearLevels" :key="gl">{{gl}}</option>
+                    </select>
+                </label>
+            </div>
+            <div class="gear-level-selector">
+            </div>
         </div>
-        <div>
-            <select v-model="state.currentGearLevel" v-on:change="stateChanged" >
-                <option v-for="gl in validGearLevels" :key="gl">{{gl}}</option>
-            </select>
-        </div>
-        <div>
-            <select v-model="state.targetGearLevel" v-on:change="stateChanged" >
-                <option v-for="gl in validTargetGearLevels" :key="gl">{{gl}}</option>
-            </select>
-        </div>
-        <div>
+        <div class="right-pane">
             <div>
                 <input v-model="state.gearItem1" v-on:change="stateChanged" type="checkbox"/>
                 <input v-model="state.gearItem4" v-on:change="stateChanged" type="checkbox"/>
@@ -65,3 +75,28 @@
 
     }
 </script>
+
+<style scoped lang="scss">
+    .character-listing {
+        margin: 2em;
+        background-color: #c4f5ff;
+    }
+    .left-pane {
+        display: inline-block;
+        text-align: left;
+        padding: 1em;
+    }
+    .right-pane {
+        padding: 1em;
+        display: inline-block;
+    }
+
+    .gear-level-selector {
+        text-align: right;
+    }
+
+    .gear-level-selector label {
+        text-align: right;
+        display: block;
+    }
+</style>
