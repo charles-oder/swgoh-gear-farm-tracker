@@ -1,5 +1,6 @@
 import SetupState from './SetupState';
 import CharacterSetupState from '@/state/CharacterSetupState';
+import GearOnHandState from '@/state/GearOnHandState';
 
 export default class SetupStateManager {
 
@@ -17,7 +18,7 @@ export default class SetupStateManager {
         localStorage[this.localStorageKey] = JSON.stringify(value);
     }
 
-    public get selectedCharacters(): Array<CharacterSetupState> {
+    public get selectedCharacters(): CharacterSetupState[] {
         return this.state.characters.filter((element) => element.isSelected);
     }
 
@@ -34,6 +35,22 @@ export default class SetupStateManager {
         const characters = this.state.characters.filter((element) => element.name !== character.name);
         characters.push(character);
         state.characters = characters;
+        this.state = state;
+    }
+
+    public getStateForGear(name: string): GearOnHandState {
+        const character = this.state.gearOnHand.find((element) => element.name === name);
+        if (character !== undefined) {
+            return character;
+        }
+        return new GearOnHandState(name);
+    }
+
+    public setStateForGear(gear: GearOnHandState) {
+        const state = this.state;
+        const listings = this.state.gearOnHand.filter((element) => element.name !== gear.name);
+        listings.push(gear);
+        state.gearOnHand = listings;
         this.state = state;
     }
 }

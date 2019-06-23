@@ -1,4 +1,6 @@
 import data from '@/assets/swgoh-gear-list.json';
+import {GearIngredient} from '@/data/GearIngredient';
+
 const gearData: IGearListData = data as IGearListData;
 
 export class GearList {
@@ -35,15 +37,11 @@ export class GearList {
         }
         return gearEntry.name;
     }
-}
 
-export class GearIngredient {
-    public name: string;
-    public amount: number;
-
-    constructor(name: string, amount: number) {
-        this.name = name;
-        this.amount = amount;
+    public allGearNames(): string[] {
+        const allNames = this.gear.map((element) => element.name);
+        const uniqueNames = new Set(allNames);
+        return Array.from(uniqueNames).sort();
     }
 }
 

@@ -40,10 +40,10 @@ interface ICharacterData {
 
 interface ICharacter {
     name: string;
-    gear_levels: Array<IGearLevel>;
+    gear_levels: IGearLevel[];
 }
 
 interface IGearLevel {
     tier: number;
-    gear: Array<string>;
+    gear: string[];
 }
