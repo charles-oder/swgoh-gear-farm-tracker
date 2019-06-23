@@ -73,6 +73,8 @@
     .on-hand-row input {
         width: 4em;
         text-align: right;
+        position: relative;
+        top: -2px;
     }
     .location-row {
         font-size: 0.8em;
