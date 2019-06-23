@@ -1,14 +1,18 @@
 <template>
     <div class="character-list">
         <h1>Character List</h1>
-        <ul>
-            <li v-for="character in characters" :key="character">
-                <h2>{{character}}</h2>
-                <ul>
-                    <li v-for="gearSlot in flattenGearList(character)" :key="gearSlot.name">{{gearSlot.amount}} {{gearSlot.name}}</li>
-                </ul>
-            </li>
-        </ul>
+        <div class="list-container">
+            <ul>
+                <li class="character-pane" v-for="character in characters" :key="character">
+                    <h2>{{character}}</h2>
+                    <ul class="gear-list">
+                        <li v-for="gearSlot in flattenGearList(character)" :key="gearSlot.name">
+                            <div class="amount">{{gearSlot.amount}}</div> {{gearSlot.name}}
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
     </div>
 </template>
 
@@ -71,3 +75,39 @@ export default class GearNeededPerCharacterView extends Vue {
 
 }
 </script>
+
+<style scoped lang="scss">
+
+    ul {
+        list-style: none;
+        padding-left: 0;
+    }
+    h1 {
+        color: #666;
+    }
+    .character-list {
+        width: 100%;
+    }
+
+    .list-container {
+        text-align: left;
+        width: 30em;
+        margin-left: 50%;
+        transform: translateX(-50%);
+    }
+    .gear-list li {
+        padding: 0.2em;
+    }
+    .amount {
+        font-weight: bold;
+        display: inline-block;
+        text-align: right;
+        width: 1.5em;
+        margin-right: 1em;
+    }
+
+    .character-pane {
+        padding: 0 1em;
+        margin-bottom: 2em;
+    }
+</style>
