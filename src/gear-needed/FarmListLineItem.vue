@@ -50,6 +50,9 @@ export default class FarmListLineItem extends Vue {
     }
 
     private farmingLocations(): string {
+        if (this.name === undefined) {
+            return '';
+        }
         return this.gearList.getCheapestLocationsForGear(this.name);
     }
 

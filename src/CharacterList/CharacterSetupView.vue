@@ -26,16 +26,16 @@
         </div>
         <div class="right-pane">
             <div>
-                <input v-model="state.gearItem1" v-on:change="stateChanged" type="checkbox"/>
-                <input v-model="state.gearItem4" v-on:change="stateChanged" type="checkbox"/>
+                <input v-model="state.gearItems[1]" v-on:change="stateChanged" type="checkbox"/>
+                <input v-model="state.gearItems[4]" v-on:change="stateChanged" type="checkbox"/>
             </div>
             <div>
-                <input v-model="state.gearItem2" v-on:change="stateChanged" type="checkbox"/>
-                <input v-model="state.gearItem5" v-on:change="stateChanged" type="checkbox"/>
+                <input v-model="state.gearItems[2]" v-on:change="stateChanged" type="checkbox"/>
+                <input v-model="state.gearItems[5]" v-on:change="stateChanged" type="checkbox"/>
             </div>
             <div>
-                <input v-model="state.gearItem3" v-on:change="stateChanged" type="checkbox"/>
-                <input v-model="state.gearItem6" v-on:change="stateChanged" type="checkbox"/>
+                <input v-model="state.gearItems[3]" v-on:change="stateChanged" type="checkbox"/>
+                <input v-model="state.gearItems[6]" v-on:change="stateChanged" type="checkbox"/>
             </div>
         </div>
     </div>
