@@ -1,28 +1,28 @@
-import data from '../assets/swgoh-character-list.json'
+import data from '@/assets/swgoh-character-list.json';
 
-let characterData: ICharacterData = <ICharacterData> data;
+const characterData: ICharacterData = data as ICharacterData;
 
 export default class CharacterList {
-
-    constructor() {
-        this.characters = characterData.data
-            .sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
-
-        this.characterNames = characterData.data.map(element => element.name);
-    }
-
-    public characterNames: Array<String>;
-    public characters: Array<ICharacter>;
 
     public get data(): any {
         return data;
     }
+
+    public characterNames: string[];
+    public characters: ICharacter[];
+
+    constructor() {
+        this.characters = characterData.data
+            .sort((a, b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
+
+        this.characterNames = characterData.data.map((element) => element.name);
+    }
 }
 
 interface ICharacterData {
-    data: Array<ICharacter>
+    data: ICharacter[];
 }
 
 interface ICharacter {
-    name: String
+    name: string;
 }
