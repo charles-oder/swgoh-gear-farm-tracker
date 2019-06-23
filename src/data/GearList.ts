@@ -56,7 +56,7 @@ export class GearList {
             return 0;
         }
         const cheapestLocation = gearEntry.cheapestLocations[0];
-        return cheapestLocation.amount;
+        return cheapestLocation.cost;
     }
 
     public getCheapestLocationsForGear(name: string): string {

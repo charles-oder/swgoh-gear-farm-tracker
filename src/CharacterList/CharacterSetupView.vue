@@ -1,12 +1,12 @@
 <template>
     <div class="character-listing">
+        <div class="name-section">
+            <label>
+                <input v-model="state.isSelected" v-on:change="stateChanged" type="checkbox"/>
+                {{characterName}}
+            </label>
+        </div>
         <div class="left-pane">
-            <div class="name-section">
-                <label>
-                    <input v-model="state.isSelected" v-on:change="stateChanged" type="checkbox"/>
-                    {{characterName}}
-                </label>
-            </div>
             <div class="gear-level-selector">
                 <label>
                     Current GL:
@@ -77,6 +77,10 @@
 </script>
 
 <style scoped lang="scss">
+    .name-section {
+        padding: 5px 5px 0 5px;
+        text-align: left;
+    }
     .character-listing {
         margin: 2em;
         background-color: #c4f5ff;
@@ -87,11 +91,13 @@
         padding: 1em;
     }
     .right-pane {
-        padding: 1em;
+        float: right;
+        padding: 5px 10px;
         display: inline-block;
     }
 
     .gear-level-selector {
+        width: 8.5em;
         text-align: right;
     }
 
