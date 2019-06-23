@@ -1,9 +1,13 @@
 <template>
     <div class="character-list">
         <h1>Total Gear Needed</h1>
-        <ul>
-            <li v-for="gearSlot in allNeededGear()" :key="gearSlot.name">{{gearSlot.amount}} {{gearSlot.name}}</li>
-        </ul>
+        <div class="list-container">
+            <ul class="gear-list">
+                <li v-for="gearSlot in allNeededGear()" :key="gearSlot.name">
+                    <div class="amount">{{gearSlot.amount}}</div> {{gearSlot.name}}
+                </li>
+            </ul>
+        </div>
     </div>
 </template>
 
@@ -70,3 +74,39 @@ export default class GearNeededPerCharacterView extends Vue {
     }
 }
 </script>
+
+<style scoped lang="scss">
+
+    ul {
+        list-style: none;
+        padding-left: 0;
+    }
+    h1 {
+        color: #666;
+    }
+    .character-list {
+        width: 100%;
+    }
+
+    .list-container {
+        text-align: left;
+        width: 30em;
+        margin-left: 50%;
+        transform: translateX(-50%);
+    }
+    .gear-list li {
+        padding: 0.2em;
+    }
+    .amount {
+        font-weight: bold;
+        display: inline-block;
+        text-align: right;
+        width: 2em;
+        margin-right: 1em;
+    }
+
+    .character-pane {
+        padding: 0 1em;
+        margin-bottom: 2em;
+    }
+</style>

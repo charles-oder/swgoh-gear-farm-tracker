@@ -102,7 +102,7 @@ export default class GearNeededPerCharacterView extends Vue {
         font-weight: bold;
         display: inline-block;
         text-align: right;
-        width: 1.5em;
+        width: 2em;
         margin-right: 1em;
     }
 
