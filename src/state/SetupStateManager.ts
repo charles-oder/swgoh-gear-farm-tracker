@@ -18,6 +18,16 @@ export default class SetupStateManager {
         localStorage[this.localStorageKey] = JSON.stringify(value);
     }
 
+    public get hideUnselected(): boolean {
+        return this.state.hideUnselected === true;
+    }
+
+    public set hideUnselected(newValue: boolean) {
+        const oldState = this.state;
+        oldState.hideUnselected = newValue;
+        this.state = oldState;
+    }
+
     public get selectedCharacters(): CharacterSetupState[] {
         return this.state.characters.filter((element) => element.isSelected);
     }

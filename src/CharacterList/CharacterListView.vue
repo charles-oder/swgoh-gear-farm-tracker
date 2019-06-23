@@ -40,5 +40,14 @@ export default class CharacterListView extends Vue {
         }
         return this.characterList.characterNames;
     }
+
+    public mounted() {
+        this.hideUnselected = this.stateManager.hideUnselected;
+    }
+
+    @Watch('hideUnselected')
+    public hideUnselectedChanged(newValue: boolean, oldValue: boolean) {
+        this.stateManager.hideUnselected = newValue
+    }
 }
 </script>
