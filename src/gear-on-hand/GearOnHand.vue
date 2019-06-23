@@ -1,11 +1,13 @@
 <template>
-    <div class="character-list">
+    <div class="gear-on-hand-list">
         <h1>Gear On Hand</h1>
-        <ul>
-            <li v-for="gear in allGearNames()" :key="gear">
-                <GearOnHandLineItem :gearName="gear" />
-            </li>
-        </ul>
+        <div class="list-container">
+            <ul>
+                <li v-for="gear in allGearNames()" :key="gear">
+                    <GearOnHandLineItem :gearName="gear" />
+                </li>
+            </ul>
+        </div>
     </div>
 </template>
 
@@ -29,3 +31,23 @@ export default class GearOnHand extends Vue {
     }
  }
 </script>
+
+<style scoped lang="scss">
+
+    ul {
+        list-style: none;
+        padding-left: 0;
+    }
+    h1 {
+        color: #666;
+    }
+    .gear-on-hand-list {
+        width: 100%;
+    }
+
+    .list-container {
+        width: 30em;
+        margin-left: 50%;
+        transform: translateX(-50%);
+    }
+</style>

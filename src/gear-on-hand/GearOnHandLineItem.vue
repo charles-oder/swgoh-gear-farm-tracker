@@ -1,8 +1,8 @@
 <template>
-    <div class="ger-on-hand-line-item">
+    <div class="gear-on-hand-line-item">
         <label>
-            {{gearName}}:
             <input v-model="state.amount" v-on:change="stateChanged" type="number"/>
+            {{gearName}}
         </label>
     </div>
 </template>
@@ -33,3 +33,14 @@ export default class GearOnHand extends Vue {
     }
 }
 </script>
+
+<style scoped lang="scss">
+
+    input {
+        width: 4em;
+    }
+    .gear-on-hand-line-item {
+        text-align: left;
+        padding: 0.2em;
+    }
+</style>
