@@ -26,7 +26,7 @@ import {GearIngredient} from '@/data/GearIngredient';
 
     },
 })
-export default class GearNeededView extends Vue {
+export default class GearNeededPerCharacterView extends Vue {
 
     private stateManager = new SetupStateManager();
     private characterList = new CharacterList();
