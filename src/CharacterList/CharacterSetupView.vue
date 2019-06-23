@@ -48,6 +48,7 @@ import SetupStateManager from '@/state/SetupStateManager';
 import ModalDialog from '@/views/ModalDialog.vue';
 import {GearList} from '@/data/GearList';
 import CharacterList from '@/CharacterList/CharacterList';
+import AlertView from '@/views/AlertView.vue';
 
 @Component({
     components: {},
@@ -82,13 +83,13 @@ export default class CharacterSetupView extends Vue {
             ModalDialog.show('Do you want to deduct this item\'s ingredients from your inventory?', 'Yes', () => {
                 const currentGearLevel = this.state.currentGearLevel;
                 if (this.characterName === undefined) {
-                    alert('Character Name Undefined');
+                    AlertView.showError('Character Name Undefined');
                     return;
                 }
                 const gearId = this.characterList.gearIdForCharacter(this.characterName,
                     currentGearLevel, position + 1);
                 if (gearId === undefined) {
-                    alert('Gear ID Undefined');
+                    AlertView.showError('Gear ID Undefined');
                     return;
                 }
                 const ingredients = this.gearList.ingredientsForGear(gearId);

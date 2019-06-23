@@ -10,6 +10,7 @@
             <router-link to="/gear-needed-per-character">Gear Needed/Character</router-link>
             |
             <router-link to="/gear-needed-total">Total Gear Needed</router-link>
+            <AlertView />
             <ModalDialog />
         </div>
         <router-view/>
@@ -19,8 +20,10 @@
 <script lang="ts">
     import {Component, Prop, Vue} from 'vue-property-decorator';
     import ModalDialog from '@/views/ModalDialog.vue';
+    import AlertView from '@/views/AlertView.vue';
     @Component({
         components: {
+            AlertView,
             ModalDialog,
         },
     })
