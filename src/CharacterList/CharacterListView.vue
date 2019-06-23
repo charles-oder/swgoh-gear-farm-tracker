@@ -54,8 +54,11 @@ export default class CharacterListView extends Vue {
 <style scoped lang="scss">
 
     ul {
+        width: 20em;
         list-style: none;
         padding-left: 0;
+        margin-left: 50%;
+        transform: translateX(-50%);
     }
     h1 {
         color: #666;

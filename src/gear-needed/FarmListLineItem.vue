@@ -1,7 +1,7 @@
 <template>
-    <div class="character-list">
+    <div class="gear-listing">
         <div class="gear-name-row">
-            <span class="amount">{{amount}}</span><span class="name">{{name}}</span>
+            <div class="amount">{{amount}}</div><div class="name">{{name}}</div>
         </div>
         <div class="on-hand-row">
             <label>
@@ -56,13 +56,19 @@
     }
 </script>
 <style scoped lang="scss">
-    .character-list {
+    .gear-listing {
         margin: 1em;
         background-color: #c4f5ff;
+        text-align: left;
+        padding: 10px;
     }
     .amount {
+        display: inline-block;
         font-weight: bold;
-        padding: 0.5em;
+        margin-right: 1em;
+    }
+    .name {
+        display: inline-block;
     }
     .gear-name-row {
         padding: 0.2em;
@@ -77,6 +83,7 @@
         top: -2px;
     }
     .location-row {
+        padding: 0 3px;
         font-size: 0.8em;
         color: #666;
     }

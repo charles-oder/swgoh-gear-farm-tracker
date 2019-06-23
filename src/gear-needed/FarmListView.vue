@@ -103,6 +103,9 @@
     ul {
         list-style: none;
         padding-left: 0;
+        width: 30em;
+        margin-left: 50%;
+        transform: translateX(-50%);
     }
     h1 {
         color: #666;
