@@ -84,8 +84,7 @@
                 if (have !== undefined) {
                     amount -= have.amount;
                 }
-                let newItem = new GearIngredient(name);
-                newItem.amount = amount;
+                let newItem = new GearIngredient(name, amount);
                 if (amount > 0) {
                     list.push(newItem);
                 }
@@ -98,3 +97,13 @@
         }
     }
 </script>
+
+<style scoped lang="scss">
+
+    ul {
+        list-style: none;
+    }
+    h1 {
+        color: #666;
+    }
+</style>

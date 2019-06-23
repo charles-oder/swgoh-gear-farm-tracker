@@ -1,15 +1,15 @@
 <template>
     <div class="character-list">
-        <div>
-            {{amount}} {{name}}
+        <div class="gear-name-row">
+            <span class="amount">{{amount}}</span><span class="name">{{name}}</span>
         </div>
-        <div>
+        <div class="on-hand-row">
             <label>
                 On Hand:
                 <input v-model="state.amount" type="number" v-on:change="stateChanged"/>
             </label>
         </div>
-        <div>
+        <div class="location-row">
             {{farmingLocations()}}
         </div>
     </div>
@@ -55,3 +55,27 @@
 
     }
 </script>
+<style scoped lang="scss">
+    .character-list {
+        margin: 1em;
+        background-color: #c4f5ff;
+    }
+    .amount {
+        font-weight: bold;
+        padding: 0.5em;
+    }
+    .gear-name-row {
+        padding: 0.2em;
+    }
+    .on-hand-row {
+        padding: 0.2em;
+    }
+    .on-hand-row input {
+        width: 4em;
+        text-align: right;
+    }
+    .location-row {
+        font-size: 0.8em;
+        color: #666;
+    }
+</style>
