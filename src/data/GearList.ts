@@ -55,7 +55,7 @@ export class GearList {
         const baseComponents = this.gear.filter((element) => element.ingredients.length === 0);
         const allNames = baseComponents.map((element) => element.name);
         const uniqueNames = new Set(allNames);
-        return Array.from(uniqueNames).sort();
+        return Array.from(uniqueNames).sort().sort((a,b) => this.sortByMark(b, a));
     }
 
     public getMinimumCostForGear(name: string): number {
@@ -89,6 +89,18 @@ export class GearList {
             return 'Raid Only';
         }
         return output;
+    }
+
+    private sortByMark(left: string, right: string): number {
+        return this.getMarkFromString(right) - this.getMarkFromString(left);
+    }
+
+    private getMarkFromString(str: string): number {
+        const components = str.split(' ');
+        if (components.length < 2 && components[0] !== 'Mk') {
+            return 99999;
+        }
+        return parseInt(components[1], 10);
     }
 }
 
