@@ -1,6 +1,6 @@
 0<template>
     <div :class="alertVisibility()">
-        {{displayMessage()}} <a :href="this.displayLink()">{{displayLinkText()}}</a>
+        <div class="message-text">{{displayMessage()}} <a :href="this.displayLink()">{{displayLinkText()}}</a></div>
         <div class="closeButton" @click="close">X</div>
     </div>
 </template>
@@ -22,6 +22,10 @@
             AlertView.shared.showError(message, link, linkText);
         }
 
+        public static showMessage(message: string, link?: string, linkText?: string) {
+            AlertView.shared.showMessage(message, link, linkText);
+        }
+
         public static hideError() {
             AlertView.shared.close();
         }
@@ -29,6 +33,7 @@
         private static instance?: AlertView;
 
         private visible: boolean = false;
+        private isError: boolean = false;
         private message?: string;
         private link?: string;
         private linkText?: string;
@@ -45,12 +50,22 @@
         }
 
         public showError(message: string, link?: string, linkText?: string) {
+            this.close();
             this.message = message;
             this.link = link;
             this.linkText = linkText === undefined ? link : linkText;
             this.visible = true;
+            this.isError = true;
         }
 
+        public showMessage(message: string, link?: string, linkText?: string) {
+            this.close();
+            this.message = message;
+            this.link = link;
+            this.linkText = linkText === undefined ? link : linkText;
+            this.visible = true;
+            this.isError = false;
+        }
 
         private displayMessage(): string | undefined {
             return this.message;
@@ -65,7 +80,9 @@
         }
 
         private alertVisibility(): string {
-            return this.visible ? 'alertContainerVisible' : 'alertContainerHidden';
+            let className = this.visible ? 'alertContainerVisible' : 'alertContainerHidden';
+            className += this.isError ? ' error' : ' message';
+            return className;
         }
     }
 
@@ -90,7 +107,6 @@
         text-align: center;
         padding: 20px 0;
         z-index: 998;
-        background-color: lightpink;
     }
     .alertContainerVisible {
         visibility: visible;
@@ -101,8 +117,29 @@
         pointer-events: none;
     }
     .closeButton {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        right: 0;
         float: right;
         cursor: pointer;
-        margin-right: 20px;
+        padding: 20px;
     }
+
+    .message {
+        background-color: palegreen;
+        animation: dock 2s linear 1 alternate;
+    }
+
+    .error {
+        background-color: lightpink;
+        animation: dock 2s linear 1 alternate;
+    }
+
+    .message-text {
+        padding: 0 2em;
+        white-space: pre;
+        vertical-align: center;
+    }
+
 </style>

@@ -44,7 +44,7 @@ export default class CharacterListView extends Vue {
 
     private characters(): string[] {
         if (this.hideUnselected) {
-            return this.stateManager.selectedCharacters.map((element) => element.name);
+            return this.stateManager.selectedCharacters.map((element) => element.name).sort();
         }
         return this.characterList.characterNames;
     }

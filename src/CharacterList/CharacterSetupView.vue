@@ -93,11 +93,15 @@ export default class CharacterSetupView extends Vue {
                     return;
                 }
                 const ingredients = this.gearList.ingredientsForGear(gearId);
+                let message = '';
                 ingredients.forEach((element) => {
                     const onHand = this.stateManager.getStateForGear(element.name);
                     onHand.amount -= element.amount;
                     this.stateManager.setStateForGear(onHand);
+                    message += element.amount + ' ' + element.name + '\n';
                 });
+                message += 'Removed from inventory.';
+                AlertView.showMessage(message);
             }, 'No');
         }
         this.stateChanged();
