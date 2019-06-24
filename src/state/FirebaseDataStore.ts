@@ -2,6 +2,7 @@ import firebase from 'firebase/app';
 import '@firebase/auth';
 import '@firebase/database';
 import SetupState from '@/state/SetupState';
+import {FirebaseStatePayload} from '@/state/FirebaseStatepayload';
 
 const firebaseConfig = {
     apiKey: 'AIzaSyCns_MdaSzFXefQDlAb51HYiY8RCAiTk00',
@@ -82,8 +83,8 @@ export default class FirebaseDataStore {
         }
         this.databaseRef.once('value').then((data) => {
             const json = JSON.stringify(data);
-            const statePayload = <FirebaseStatePayload> JSON.parse(json);
-            const state = <SetupState> JSON.parse(statePayload.stateJson);
+            const statePayload = JSON.parse(json) as FirebaseStatePayload;
+            const state = JSON.parse(statePayload.stateJson) as SetupState;
             success(state);
         }).catch((error) => {
             failure(JSON.stringify(error));
@@ -96,13 +97,5 @@ export default class FirebaseDataStore {
         const database = firebase.database(this.app);
         const path = 'swgoh-gear-farm/' + this.user.uid;
         return database.ref('swgoh-gear-farm/' + this.user.uid);
-    }
-}
-
-class FirebaseStatePayload {
-    public stateJson: string;
-
-    constructor(stateJson: string) {
-        this.stateJson = stateJson;
     }
 }

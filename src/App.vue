@@ -38,13 +38,13 @@
         private confirmSaveToCloud() {
             ModalDialog.show('Are you sure you want to overwrite your cloud data?', 'Yes', () => {
                 this.saveDataToCloud();
-            })
+            });
         }
 
         private confirmPullFromCloud() {
             ModalDialog.show('Are you sure you want to overwrite your local data?', 'Yes', () => {
                 this.pullDataFromCloud();
-            })
+            });
         }
 
         private saveDataToCloud() {
@@ -56,9 +56,9 @@
                 }, (error) => {
                     AlertView.showError('Error saving state: ' + error);
                 });
-            }, (error => {
+            }, (error) => {
                 AlertView.showError('login failure: ' + error);
-            }))
+            });
         }
 
         private pullDataFromCloud() {
@@ -70,10 +70,10 @@
                     location.reload();
                 }, (error) => {
                     AlertView.showError('Error saving state: ' + error);
-                })
-            }, (error => {
+                });
+            }, (error) => {
                 AlertView.showError('login failure: ' + error);
-            }))
+            });
         }
 
     }
