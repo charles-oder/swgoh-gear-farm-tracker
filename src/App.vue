@@ -10,6 +10,8 @@
             <router-link to="/gear-needed-per-character">Gear Needed/Character</router-link>
             |
             <router-link to="/gear-needed-total">Total Gear Needed</router-link>
+            <div><a href="#" @click="confirmSaveToCloud">Save Data To Cloud</a> |
+                <a href="#" @click="confirmPullFromCloud">Load Data From Cloud</a></div>
             <AlertView />
             <ModalDialog />
         </div>
@@ -21,6 +23,9 @@
     import {Component, Prop, Vue} from 'vue-property-decorator';
     import ModalDialog from '@/views/ModalDialog.vue';
     import AlertView from '@/views/AlertView.vue';
+    import FirebaseDataStore from '@/state/FirebaseDataStore';
+    import SetupStateManager from '@/state/SetupStateManager';
+
     @Component({
         components: {
             AlertView,
@@ -28,6 +33,48 @@
         },
     })
     export default class App extends Vue {
+
+
+        private confirmSaveToCloud() {
+            ModalDialog.show('Are you sure you want to overwrite your cloud data?', 'Yes', () => {
+                this.saveDataToCloud();
+            })
+        }
+
+        private confirmPullFromCloud() {
+            ModalDialog.show('Are you sure you want to overwrite your local data?', 'Yes', () => {
+                this.pullDataFromCloud();
+            })
+        }
+
+        private saveDataToCloud() {
+            const stateManager = new SetupStateManager();
+            const localState = stateManager.getState();
+            FirebaseDataStore.shared.authenticate(() => {
+                FirebaseDataStore.shared.storeState(localState, () => {
+                    AlertView.showMessage('state saved!!');
+                }, (error) => {
+                    AlertView.showError('Error saving state: ' + error);
+                });
+            }, (error => {
+                AlertView.showError('login failure: ' + error);
+            }))
+        }
+
+        private pullDataFromCloud() {
+            const stateManager = new SetupStateManager();
+            FirebaseDataStore.shared.authenticate(() => {
+                FirebaseDataStore.shared.fetchState((state) => {
+                    AlertView.showMessage('State downloaded from cloud');
+                    stateManager.setState(state);
+                    location.reload();
+                }, (error) => {
+                    AlertView.showError('Error saving state: ' + error);
+                })
+            }, (error => {
+                AlertView.showError('login failure: ' + error);
+            }))
+        }
 
     }
 </script>

@@ -6,7 +6,7 @@ export default class SetupStateManager {
 
     private localStorageKey = 'swgohGearFarmTrackerState';
 
-    private get state(): SetupState {
+    public getState(): SetupState {
         const stateJson = localStorage[this.localStorageKey];
         if (stateJson === undefined) {
             return new SetupState();
@@ -14,26 +14,26 @@ export default class SetupStateManager {
         return JSON.parse(stateJson);
     }
 
-    private set state(value: SetupState) {
+    public setState(value: SetupState) {
         localStorage[this.localStorageKey] = JSON.stringify(value);
     }
 
     public get hideUnselected(): boolean {
-        return this.state.hideUnselected === true;
+        return this.getState().hideUnselected === true;
     }
 
     public set hideUnselected(newValue: boolean) {
-        const oldState = this.state;
+        const oldState = this.getState();
         oldState.hideUnselected = newValue;
-        this.state = oldState;
+        this.setState(oldState);
     }
 
     public get selectedCharacters(): CharacterSetupState[] {
-        return this.state.characters.filter((element) => element.isSelected);
+        return this.getState().characters.filter((element) => element.isSelected);
     }
 
     public getStateForCharacter(name: string): CharacterSetupState {
-        const character = this.state.characters.find((element) => element.name === name);
+        const character = this.getState().characters.find((element) => element.name === name);
         if (character !== undefined) {
             return character;
         }
@@ -41,15 +41,15 @@ export default class SetupStateManager {
     }
 
     public setStateForCharacter(character: CharacterSetupState) {
-        const state = this.state;
-        const characters = this.state.characters.filter((element) => element.name !== character.name);
+        const state = this.getState();
+        const characters = this.getState().characters.filter((element) => element.name !== character.name);
         characters.push(character);
         state.characters = characters;
-        this.state = state;
+        this.setState(state);
     }
 
     public getStateForGear(name: string): GearOnHandState {
-        const character = this.state.gearOnHand.find((element) => element.name === name);
+        const character = this.getState().gearOnHand.find((element) => element.name === name);
         if (character !== undefined) {
             return character;
         }
@@ -57,14 +57,14 @@ export default class SetupStateManager {
     }
 
     public setStateForGear(gear: GearOnHandState) {
-        const state = this.state;
-        const listings = this.state.gearOnHand.filter((element) => element.name !== gear.name);
+        const state = this.getState();
+        const listings = this.getState().gearOnHand.filter((element) => element.name !== gear.name);
         listings.push(gear);
         state.gearOnHand = listings;
-        this.state = state;
+        this.setState(state);
     }
 
     public getAllGearOnHand(): GearOnHandState[] {
-        return this.state.gearOnHand;
+        return this.getState().gearOnHand;
     }
 }

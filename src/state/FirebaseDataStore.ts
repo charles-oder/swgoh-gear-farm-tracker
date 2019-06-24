@@ -25,7 +25,7 @@ export default class FirebaseDataStore {
     }
 
     private app: firebase.app.App;
-    private credentials?: firebase.auth.UserCredential;
+    private user?: firebase.User;
 
     private constructor() {
         this.app = firebase.initializeApp(firebaseConfig);
@@ -34,12 +34,32 @@ export default class FirebaseDataStore {
     public authenticate(success: () => void, failure: (error: string) => void) {
         const provider = new firebase.auth.GoogleAuthProvider();
         provider.addScope('https://www.googleapis.com/auth/appstate');
-        firebase.auth(this.app).signInWithPopup(provider).then((credentials) => {
-            this.credentials = credentials;
-            success();
-        }).catch((error) => {
-            failure(JSON.stringify(error));
+
+        firebase.auth(this.app).onAuthStateChanged((user) => {
+            if (user === null) {
+                firebase.auth(this.app).setPersistence(firebase.auth.Auth.Persistence.SESSION)
+                    .then(() => {
+                        firebase.auth(this.app).signInWithPopup(provider).then((credentials) => {
+                            if (credentials.user === null) {
+                                failure('No user data returned');
+                                return;
+                            }
+                            this.user = credentials.user;
+                            success();
+                        }).catch((error) => {
+                            failure(JSON.stringify(error));
+                        });
+                    })
+                    .catch((error) => {
+                        failure(JSON.stringify(error));
+                    });
+            } else {
+                this.user = user;
+                success();
+            }
         });
+
+
     }
 
     public storeState(state: SetupState, success: () => void, failure: (message: string) => void) {
@@ -47,7 +67,8 @@ export default class FirebaseDataStore {
             failure('No database reference availalbe');
             return;
         }
-        this.databaseRef.set(state).then(() => {
+        const payload = new FirebaseStatePayload(JSON.stringify(state));
+        this.databaseRef.set(payload).then(() => {
             success();
         }).catch((error) => {
             failure(JSON.stringify(error));
@@ -61,19 +82,27 @@ export default class FirebaseDataStore {
         }
         this.databaseRef.once('value').then((data) => {
             const json = JSON.stringify(data);
-            const state = <SetupState> JSON.parse(json);
+            const statePayload = <FirebaseStatePayload> JSON.parse(json);
+            const state = <SetupState> JSON.parse(statePayload.stateJson);
             success(state);
         }).catch((error) => {
             failure(JSON.stringify(error));
         });
     }
     private get databaseRef(): firebase.database.Reference | undefined {
-        if (this.credentials === undefined
-            || this.credentials.user === null) {
+        if (this.user === undefined) {
             return undefined;
         }
         const database = firebase.database(this.app);
-        const path = 'swgoh-gear-farm/' + this.credentials.user.uid;
-        return database.ref('swgoh-gear-farm/' + this.credentials.user.uid);
+        const path = 'swgoh-gear-farm/' + this.user.uid;
+        return database.ref('swgoh-gear-farm/' + this.user.uid);
+    }
+}
+
+class FirebaseStatePayload {
+    public stateJson: string;
+
+    constructor(stateJson: string) {
+        this.stateJson = stateJson;
     }
 }
