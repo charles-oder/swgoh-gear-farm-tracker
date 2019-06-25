@@ -55,7 +55,7 @@ export class GearList {
         const baseComponents = this.gear.filter((element) => element.ingredients.length === 0);
         const allNames = baseComponents.map((element) => element.name);
         const uniqueNames = new Set(allNames);
-        return Array.from(uniqueNames).sort().sort((a,b) => this.sortByMark(b, a));
+        return Array.from(uniqueNames).sort().sort((a, b) => this.sortByMark(b, a));
     }
 
     public getMinimumCostForGear(name: string): number {

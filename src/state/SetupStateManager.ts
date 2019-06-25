@@ -25,8 +25,8 @@ export default class SetupStateManager {
         }
         return this.observable.value!;
     }
-    
-    pullValueFromStorage(): SetupState {
+
+    public pullValueFromStorage(): SetupState {
         const stateJson = localStorage[this.localStorageKey];
         if (stateJson === undefined) {
             return new SetupState();
