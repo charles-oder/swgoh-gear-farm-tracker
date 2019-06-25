@@ -7,9 +7,18 @@ const gearLocations: IGearLocationData = locationData as IGearLocationData;
 
 export class GearList {
 
+    private static instance?: GearList;
+
+    public static get shared(): GearList {
+        if (this.instance === undefined) {
+            this.instance = new GearList();
+        }
+        return this.instance!;
+    }
+
     public gear: IGearEntry[];
 
-    constructor() {
+    private constructor() {
         this.gear = gearData.data;
     }
 

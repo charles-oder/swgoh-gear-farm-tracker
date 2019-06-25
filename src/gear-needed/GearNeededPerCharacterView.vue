@@ -35,7 +35,7 @@ export default class GearNeededPerCharacterView extends Vue {
 
     private stateManager = SetupStateManager.shared;
     private characterList = new CharacterList();
-    private gearList = new GearList();
+    private gearList = GearList.shared;
 
     private get characters(): string[] {
         return this.stateManager.selectedCharacters.map((element) => element.name);

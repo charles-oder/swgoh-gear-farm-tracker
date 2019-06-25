@@ -24,7 +24,7 @@ import GearOnHandLineItem from '@/gear-on-hand/GearOnHandLineItem.vue';
 })
 export default class GearOnHand extends Vue {
 
-    private gearList = new GearList();
+    private gearList = GearList.shared;
 
     public allGearNames(): string[] {
         return this.gearList.allGearNames();

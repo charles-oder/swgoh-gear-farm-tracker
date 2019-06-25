@@ -32,7 +32,7 @@ export default class FarmListView extends Vue {
 
     private stateManager = SetupStateManager.shared;
     private characterList = new CharacterList();
-    private gearList = new GearList();
+    private gearList = GearList.shared;
     private needList: GearIngredient[] = [];
     private id: string = '';
 
