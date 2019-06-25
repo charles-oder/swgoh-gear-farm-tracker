@@ -1,12 +1,21 @@
 import SetupState from './SetupState';
 import CharacterSetupState from '@/state/CharacterSetupState';
 import GearOnHandState from '@/state/GearOnHandState';
+import Observable from '@/state/Observable';
 
 export default class SetupStateManager {
 
     private localStorageKey = 'swgohGearFarmTrackerState';
+    private observable: Observable<SetupState> = new Observable<SetupState>(undefined);
 
     public getState(): SetupState {
+        if (this.observable.value === undefined) {
+            this.observable.value = this.pullValueFromStorage();
+        }
+        return this.observable.value!;
+    }
+    
+    pullValueFromStorage(): SetupState {
         const stateJson = localStorage[this.localStorageKey];
         if (stateJson === undefined) {
             return new SetupState();
@@ -15,6 +24,7 @@ export default class SetupStateManager {
     }
 
     public setState(value: SetupState) {
+        this.observable.value = value;
         localStorage[this.localStorageKey] = JSON.stringify(value);
     }
 
