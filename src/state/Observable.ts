@@ -1,4 +1,5 @@
 import {Watch} from 'vue-property-decorator';
+import Uuid from '@/utility/Uuid';
 
 export default class Observable<T> {
 
@@ -19,10 +20,12 @@ export default class Observable<T> {
         this.valueDidChange(newValue, oldValue);
     }
 
-    public observe(id: string, callback: (newValue: T | undefined, oldValue: T | undefined) => void) {
+    public observe(callback: (newValue: T | undefined, oldValue: T | undefined) => void): string {
+        const id: string = Uuid.newGuid();
         const newObserver = { id, callback } as IObserver<T>;
         this.observers.push(newObserver);
         callback(this.value, this.value);
+        return id;
     }
 
     public unobserve(id: string) {

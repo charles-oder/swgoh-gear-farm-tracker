@@ -19,7 +19,7 @@ import {GearIngredient} from '@/data/GearIngredient';
 import CharacterSetupState from '../state/CharacterSetupState';
 import GearOnHandState from '../state/GearOnHandState';
 import FarmListLineItem from '@/gear-needed/FarmListLineItem.vue';
-import AlertView from '@/views/AlertView.vue';
+import SetupState from '@/state/SetupState';
 
 @Component({
     components: {
@@ -34,15 +34,17 @@ export default class FarmListView extends Vue {
     private characterList = new CharacterList();
     private gearList = new GearList();
     private needList: GearIngredient[] = [];
+    private id: string = '';
 
     public created() {
-        this.stateManager.getObservable().observe(this._uid, (newValue, oldValue) => {
-            this.needList = this.allNeededGear()
+        this.id = this.stateManager.getObservable().observe((newValue, oldValue) => {
+            const state = newValue ? newValue : new SetupState();
+            this.needList = this.allNeededGear(state.gearOnHand)
         });
     }
 
     public destroyed() {
-        this.stateManager.getObservable().unobserve(this._uid);
+        this.stateManager.getObservable().unobserve(this.id);
     }
 
     private get characters(): CharacterSetupState[] {
@@ -68,10 +70,10 @@ export default class FarmListView extends Vue {
         return list;
     }
 
-    private allNeededGear(): GearIngredient[] {
+    private allNeededGear(gearOnHand: GearOnHandState[]): GearIngredient[] {
         const list: GearIngredient[] = [];
         this.characters.forEach((character) => list.push(...this.getMissingGearSlots(character)));
-        return this.subtractGearOnHand(this.flattenGearIngredients(list), this.gearOnHand())
+        return this.subtractGearOnHand(this.flattenGearIngredients(list), gearOnHand)
             .sort((a, b) => b.amount - a.amount);
     }
 
@@ -107,9 +109,6 @@ export default class FarmListView extends Vue {
         return list;
     }
 
-    private gearOnHand(): GearOnHandState[] {
-        return this.stateManager.getAllGearOnHand();
-    }
 }
 </script>
 
