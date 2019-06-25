@@ -19,6 +19,10 @@ export default class SetupStateManager {
 
     private constructor() {}
 
+    public getObservable(): Observable<SetupState> {
+        return this.observable;
+    }
+
     public getState(): SetupState {
         if (this.observable.value === undefined) {
             this.observable.value = this.pullValueFromStorage();

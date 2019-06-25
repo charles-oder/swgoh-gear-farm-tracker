@@ -2,7 +2,7 @@
     <div class="character-list">
         <h1>Gear to Farm</h1>
         <ul>
-            <li v-for="gearSlot in allNeededGear()" :key="gearSlot.name">
+            <li v-for="gearSlot in needList" :key="gearSlot.name">
                 <FarmListLineItem :name="gearSlot.name" :amount="gearSlot.amount"/>
             </li>
         </ul>
@@ -19,6 +19,7 @@ import {GearIngredient} from '@/data/GearIngredient';
 import CharacterSetupState from '../state/CharacterSetupState';
 import GearOnHandState from '../state/GearOnHandState';
 import FarmListLineItem from '@/gear-needed/FarmListLineItem.vue';
+import AlertView from '@/views/AlertView.vue';
 
 @Component({
     components: {
@@ -32,6 +33,17 @@ export default class FarmListView extends Vue {
     private stateManager = SetupStateManager.shared;
     private characterList = new CharacterList();
     private gearList = new GearList();
+    private needList: GearIngredient[] = [];
+
+    public created() {
+        this.stateManager.getObservable().observe(this._uid, (newValue, oldValue) => {
+            this.needList = this.allNeededGear()
+        });
+    }
+
+    public destroyed() {
+        this.stateManager.getObservable().unobserve(this._uid);
+    }
 
     private get characters(): CharacterSetupState[] {
         return this.stateManager.selectedCharacters;
