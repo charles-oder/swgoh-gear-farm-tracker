@@ -31,7 +31,7 @@ import SetupState from '@/state/SetupState';
 export default class FarmListView extends Vue {
 
     private stateManager = SetupStateManager.shared;
-    private characterList = new CharacterList();
+    private characterList = CharacterList.shared;
     private gearList = GearList.shared;
     private needList: GearIngredient[] = [];
     private id: string = '';
@@ -39,7 +39,7 @@ export default class FarmListView extends Vue {
     public created() {
         this.id = this.stateManager.getObservable().observe((newValue, oldValue) => {
             const state = newValue ? newValue : new SetupState();
-            this.needList = this.allNeededGear(state.gearOnHand)
+            this.needList = this.allNeededGear(state.gearOnHand);
         });
     }
 

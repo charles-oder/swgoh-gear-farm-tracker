@@ -30,7 +30,7 @@ import CharacterSetupState from '../state/CharacterSetupState';
 export default class GearNeededPerCharacterView extends Vue {
 
     private stateManager = SetupStateManager.shared;
-    private characterList = new CharacterList();
+    private characterList = CharacterList.shared;
     private gearList = GearList.shared;
 
     private get characters(): CharacterSetupState[] {

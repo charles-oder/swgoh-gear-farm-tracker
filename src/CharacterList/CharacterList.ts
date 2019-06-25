@@ -5,6 +5,15 @@ const characterData: ICharacterData = data as ICharacterData;
 
 export default class CharacterList {
 
+    private static instance?: CharacterList;
+
+    public static get shared(): CharacterList {
+        if (this.instance === undefined) {
+            this.instance = new CharacterList();
+        }
+        return this.instance!;
+    }
+
     public get data(): any {
         return data;
     }
@@ -12,7 +21,7 @@ export default class CharacterList {
     public characterNames: string[];
     public characters: ICharacter[];
 
-    constructor() {
+    private constructor() {
         this.characters = characterData.data
             .sort((a, b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
 

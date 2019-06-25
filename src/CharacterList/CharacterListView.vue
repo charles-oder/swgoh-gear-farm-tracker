@@ -29,7 +29,7 @@ import SetupStateManager from '@/state/SetupStateManager';
 })
 export default class CharacterListView extends Vue {
 
-    private characterList = new CharacterList();
+    private characterList = CharacterList.shared;
     private stateManager = SetupStateManager.shared;
     private hideUnselected: boolean = false;
 

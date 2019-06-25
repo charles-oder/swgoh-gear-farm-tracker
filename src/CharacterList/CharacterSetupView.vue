@@ -61,7 +61,7 @@ export default class CharacterSetupView extends Vue {
     private state: CharacterSetupState = new CharacterSetupState('');
     private stateManager = SetupStateManager.shared;
     private gearList = GearList.shared;
-    private characterList = new CharacterList();
+    private characterList = CharacterList.shared;
 
     private get validTargetGearLevels() {
         const currentGearLevel = this.state.currentGearLevel;
