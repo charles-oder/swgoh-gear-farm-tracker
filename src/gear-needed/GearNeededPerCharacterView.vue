@@ -33,7 +33,7 @@ import {GearIngredient} from '@/data/GearIngredient';
 })
 export default class GearNeededPerCharacterView extends Vue {
 
-    private stateManager = new SetupStateManager();
+    private stateManager = SetupStateManager.shared;
     private characterList = new CharacterList();
     private gearList = new GearList();
 

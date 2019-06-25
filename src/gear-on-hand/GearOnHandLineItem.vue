@@ -19,7 +19,7 @@ export default class GearOnHand extends Vue {
 
     @Prop() public gearName?: string;
 
-    private stateManager = new SetupStateManager();
+    private stateManager = SetupStateManager.shared;
     private state: GearOnHandState = new GearOnHandState('');
 
     public mounted() {

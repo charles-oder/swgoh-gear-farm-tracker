@@ -48,7 +48,7 @@
         }
 
         private saveDataToCloud() {
-            const stateManager = new SetupStateManager();
+            const stateManager = SetupStateManager.shared;
             const localState = stateManager.getState();
             FirebaseDataStore.shared.authenticate(() => {
                 FirebaseDataStore.shared.storeState(localState, () => {
@@ -62,7 +62,7 @@
         }
 
         private pullDataFromCloud() {
-            const stateManager = new SetupStateManager();
+            const stateManager = SetupStateManager.shared;
             FirebaseDataStore.shared.authenticate(() => {
                 FirebaseDataStore.shared.fetchState((state) => {
                     AlertView.showMessage('State downloaded from cloud');

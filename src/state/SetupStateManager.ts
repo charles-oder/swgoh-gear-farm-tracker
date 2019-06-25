@@ -5,8 +5,19 @@ import Observable from '@/state/Observable';
 
 export default class SetupStateManager {
 
+    private static instance?: SetupStateManager;
+
+    public static get shared(): SetupStateManager {
+        if (this.instance === undefined) {
+            this.instance = new SetupStateManager();
+        }
+        return this.instance!;
+    }
+
     private localStorageKey = 'swgohGearFarmTrackerState';
     private observable: Observable<SetupState> = new Observable<SetupState>(undefined);
+
+    private constructor() {}
 
     public getState(): SetupState {
         if (this.observable.value === undefined) {

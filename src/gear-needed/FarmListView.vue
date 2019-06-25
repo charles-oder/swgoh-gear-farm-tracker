@@ -29,7 +29,7 @@ import FarmListLineItem from '@/gear-needed/FarmListLineItem.vue';
 })
 export default class FarmListView extends Vue {
 
-    private stateManager = new SetupStateManager();
+    private stateManager = SetupStateManager.shared;
     private characterList = new CharacterList();
     private gearList = new GearList();
 

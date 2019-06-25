@@ -37,7 +37,7 @@ export default class FarmListLineItem extends Vue {
     private state: GearOnHandState = new GearOnHandState('');
     private originalState: GearOnHandState = new GearOnHandState('');
 
-    private stateManager = new SetupStateManager();
+    private stateManager = SetupStateManager.shared;
     private gearList = new GearList();
 
     public mounted() {
