@@ -42,13 +42,12 @@
 </template>
 
 <script lang="ts">
-import {Component, Vue, Prop, Watch} from 'vue-property-decorator';
+import {Component, Vue, Prop} from 'vue-property-decorator';
 import CharacterSetupState from '@/state/CharacterSetupState';
 import SetupStateManager from '@/state/SetupStateManager';
-import ModalDialog from '@/views/ModalDialog.vue';
 import {GearList} from '@/data/GearList';
 import CharacterList from '@/CharacterList/CharacterList';
-import AlertView from '@/views/AlertView.vue';
+import AlertBus from '@/views/AlertBus';
 
 @Component({
     components: {},
@@ -80,16 +79,16 @@ export default class CharacterSetupView extends Vue {
 
     private gearUpdated(position: number) {
         if (this.state.gearItems[position]) {
-            ModalDialog.show('Do you want to deduct this item\'s ingredients from your inventory?', 'Yes', () => {
+            AlertBus.showDialog('Do you want to deduct this item\'s ingredients from your inventory?', 'Yes', () => {
                 const currentGearLevel = this.state.currentGearLevel;
                 if (this.characterName === undefined) {
-                    AlertView.showError('Character Name Undefined');
+                    AlertBus.alertError('Character Name Undefined');
                     return;
                 }
                 const gearId = this.characterList.gearIdForCharacter(this.characterName,
                     currentGearLevel, position + 1);
                 if (gearId === undefined) {
-                    AlertView.showError('Gear ID Undefined');
+                    AlertBus.alertError('Gear ID Undefined');
                     return;
                 }
                 const ingredients = this.gearList.ingredientsForGear(gearId);
@@ -101,7 +100,7 @@ export default class CharacterSetupView extends Vue {
                     message += element.amount + ' ' + element.name + '\n';
                 });
                 message += 'Removed from inventory.';
-                AlertView.showMessage(message);
+                AlertBus.alertMessage(message);
             }, 'No');
         }
         this.stateChanged();

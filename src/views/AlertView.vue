@@ -6,31 +6,11 @@
 </template>
 
 <script lang="ts">
-    import {Component, Prop, Vue} from 'vue-property-decorator';
+    import {Component, Vue} from 'vue-property-decorator';
+    import AlertBus from '@/views/AlertBus';
 
     @Component
     export default class AlertView extends Vue {
-
-        public static get shared(): AlertView {
-            if (this.instance === undefined) {
-                throw new Error('AlertView must be mounted first!');
-            }
-            return this.instance;
-        }
-
-        public static showError(message: string, link?: string, linkText?: string) {
-            AlertView.shared.showError(message, link, linkText);
-        }
-
-        public static showMessage(message: string, link?: string, linkText?: string) {
-            AlertView.shared.showMessage(message, link, linkText);
-        }
-
-        public static hideError() {
-            AlertView.shared.close();
-        }
-
-        private static instance?: AlertView;
 
         private visible: boolean = false;
         private isError: boolean = false;
@@ -38,8 +18,11 @@
         private link?: string;
         private linkText?: string;
 
+
+        // noinspection JSUnusedGlobalSymbols Lifecycle Method
         public mounted() {
-            AlertView.instance = this;
+            AlertBus.shared.alertMessage = this.showMessage;
+            AlertBus.shared.alertError = this.showError;
         }
 
         public close() {

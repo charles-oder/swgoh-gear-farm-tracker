@@ -20,11 +20,12 @@
 </template>
 
 <script lang="ts">
-    import {Component, Prop, Vue} from 'vue-property-decorator';
+    import {Component, Vue} from 'vue-property-decorator';
     import ModalDialog from '@/views/ModalDialog.vue';
     import AlertView from '@/views/AlertView.vue';
     import FirebaseDataStore from '@/state/FirebaseDataStore';
     import SetupStateManager from '@/state/SetupStateManager';
+    import AlertBus from '@/views/AlertBus';
 
     @Component({
         components: {
@@ -36,13 +37,13 @@
 
 
         private confirmSaveToCloud() {
-            ModalDialog.show('Are you sure you want to overwrite your cloud data?', 'Yes', () => {
+            AlertBus.showDialog('Are you sure you want to overwrite your cloud data?', 'Yes', () => {
                 this.saveDataToCloud();
             });
         }
 
         private confirmPullFromCloud() {
-            ModalDialog.show('Are you sure you want to overwrite your local data?', 'Yes', () => {
+            AlertBus.showDialog('Are you sure you want to overwrite your local data?', 'Yes', () => {
                 this.pullDataFromCloud();
             });
         }
@@ -52,12 +53,12 @@
             const localState = stateManager.getState();
             FirebaseDataStore.shared.authenticate(() => {
                 FirebaseDataStore.shared.storeState(localState, () => {
-                    AlertView.showMessage('state saved!!');
+                    AlertBus.alertMessage('state saved!!');
                 }, (error) => {
-                    AlertView.showError('Error saving state: ' + error);
+                    AlertBus.alertError('Error saving state: ' + error);
                 });
             }, (error) => {
-                AlertView.showError('login failure: ' + error);
+                AlertBus.alertError('login failure: ' + error);
             });
         }
 
@@ -65,14 +66,14 @@
             const stateManager = SetupStateManager.shared;
             FirebaseDataStore.shared.authenticate(() => {
                 FirebaseDataStore.shared.fetchState((state) => {
-                    AlertView.showMessage('State downloaded from cloud');
+                    AlertBus.alertMessage('State downloaded from cloud');
                     stateManager.setState(state);
                     location.reload();
                 }, (error) => {
-                    AlertView.showError('Error saving state: ' + error);
+                    AlertBus.alertError('Error saving state: ' + error);
                 });
             }, (error) => {
-                AlertView.showError('login failure: ' + error);
+                AlertBus.alertError('login failure: ' + error);
             });
         }
 

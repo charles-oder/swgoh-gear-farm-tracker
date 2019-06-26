@@ -11,31 +11,11 @@
 </template>
 
 <script lang="ts">
-    import {Component, Prop, Vue} from 'vue-property-decorator';
+    import {Component, Vue} from 'vue-property-decorator';
+    import AlertBus from '@/views/AlertBus';
 
     @Component
     export default class ModalDialog extends Vue {
-
-        public static get shared(): ModalDialog {
-            if (this.instance === undefined) {
-                throw new Error('ModalDialog must be mounted first!');
-            }
-            return this.instance;
-        }
-
-        public static show(message: string,
-                           positiveTitle?: string,
-                           positiveCallback?: () => void,
-                           negativeTitle?: string,
-                           negativeCallback?: () => void) {
-            ModalDialog.shared.show(message, positiveTitle, positiveCallback, negativeTitle, negativeCallback);
-        }
-
-        public static hide() {
-            ModalDialog.shared.hide();
-        }
-
-        private static instance?: ModalDialog;
 
         private visible: boolean = false;
         private message?: string;
@@ -67,7 +47,7 @@
         }
 
         public mounted() {
-            ModalDialog.instance = this;
+            AlertBus.shared.showDialog = this.show;
         }
 
         private displayMessage(): string | undefined {
