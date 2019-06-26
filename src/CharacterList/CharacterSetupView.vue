@@ -48,11 +48,14 @@ import SetupStateManager from '@/state/SetupStateManager';
 import {GearList} from '@/data/GearList';
 import CharacterList from '@/CharacterList/CharacterList';
 import AlertBus from '@/views/AlertBus';
+import SetupStateObservingView from '@/components/SetupStateObservingView.vue';
+import SetupState from '@/state/SetupState';
+import SetupStateHelper from '@/state/SetupStateHelper';
 
 @Component({
     components: {},
 })
-export default class CharacterSetupView extends Vue {
+export default class CharacterSetupView extends SetupStateObservingView {
 
     @Prop() public characterName?: string;
 
@@ -66,6 +69,10 @@ export default class CharacterSetupView extends Vue {
     private get validTargetGearLevels() {
         const currentGearLevel = this.state.currentGearLevel;
         return this.validGearLevels.filter((element) => element >= currentGearLevel);
+    }
+
+    protected stateDidChange(newValue?: SetupState, oldValue?: SetupState) {
+        this.state = new SetupStateHelper(newValue).getStateForCharacter(this.characterName);
     }
 
     // noinspection JSUnusedGlobalSymbols Lifecycle Method

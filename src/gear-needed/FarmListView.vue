@@ -2,7 +2,7 @@
     <div class="character-list">
         <h1>Gear to Farm</h1>
         <ul>
-            <li v-for="gearSlot in needList" :key="gearSlot.name">
+            <li v-for="gearSlot in displayNeedList()" :key="gearSlot.name">
                 <FarmListLineItem :name="gearSlot.name" :amount="gearSlot.amount"/>
             </li>
         </ul>
@@ -20,6 +20,7 @@ import CharacterSetupState from '../state/CharacterSetupState';
 import GearOnHandState from '../state/GearOnHandState';
 import FarmListLineItem from '@/gear-needed/FarmListLineItem.vue';
 import SetupState from '@/state/SetupState';
+import SetupStateObservingView from '@/components/SetupStateObservingView.vue';
 
 // noinspection JSUnusedGlobalSymbols export default Required by Vue
 @Component({
@@ -29,25 +30,20 @@ import SetupState from '@/state/SetupState';
 
     },
 })
-export default class FarmListView extends Vue {
+export default class FarmListView extends SetupStateObservingView {
 
     private stateManager = SetupStateManager.shared;
     private characterList = CharacterList.shared;
     private gearList = GearList.shared;
     private needList: GearIngredient[] = [];
-    private id: string = '';
 
-    // noinspection JSUnusedGlobalSymbols Lifecycle Method
-    public created() {
-        this.id = this.stateManager.getObservable().observe((newValue, oldValue) => {
-            const state = newValue ? newValue : new SetupState();
-            this.needList = this.allNeededGear(state.gearOnHand);
-        });
+    public displayNeedList(): GearIngredient[] {
+        return this.needList;
     }
 
-    // noinspection JSUnusedGlobalSymbols Lifecycle Method
-    public destroyed() {
-        this.stateManager.getObservable().unobserve(this.id);
+    protected stateDidChange(newValue?: SetupState, oldValue?: SetupState) {
+        const state = newValue ? newValue : new SetupState();
+        this.needList = this.allNeededGear(state.gearOnHand);
     }
 
     private get characters(): CharacterSetupState[] {

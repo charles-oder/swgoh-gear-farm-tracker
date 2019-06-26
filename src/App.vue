@@ -68,7 +68,6 @@
                 FirebaseDataStore.shared.fetchState((state) => {
                     AlertBus.alertMessage('State downloaded from cloud');
                     stateManager.setState(state);
-                    location.reload();
                 }, (error) => {
                     AlertBus.alertError('Error saving state: ' + error);
                 });
