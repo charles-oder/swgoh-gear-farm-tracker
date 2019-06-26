@@ -12,9 +12,9 @@
     @Component
     export default class SetupStateObservingView extends Vue {
 
-        private stateObservableId: string = '';
-
         protected setupState: SetupState = new SetupState();
+
+        private stateObservableId: string = '';
 
         // noinspection JSUnusedGlobalSymbols Lifecycle
         protected created() {

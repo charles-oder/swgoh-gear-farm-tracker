@@ -71,15 +71,15 @@ export default class CharacterSetupView extends SetupStateObservingView {
         return this.validGearLevels.filter((element) => element >= currentGearLevel);
     }
 
-    protected stateDidChange(newValue?: SetupState, oldValue?: SetupState) {
-        this.state = new SetupStateHelper(newValue).getStateForCharacter(this.characterName);
-    }
-
     // noinspection JSUnusedGlobalSymbols Lifecycle Method
     public mounted() {
         const name = this.characterName ? this.characterName : '';
 
         this.state = this.stateManager.getStateForCharacter(name);
+    }
+
+    protected stateDidChange(newValue?: SetupState, oldValue?: SetupState) {
+        this.state = new SetupStateHelper(newValue).getStateForCharacter(this.characterName);
     }
 
     private stateChanged() {

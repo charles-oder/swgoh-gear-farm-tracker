@@ -21,7 +21,10 @@ export default class SetupStateHelper {
         return filtered[0];
     }
 
-    public getStateForGear(name: string): GearOnHandState {
+    public getStateForGear(name: string | undefined): GearOnHandState {
+        if (name === undefined) {
+            return new GearOnHandState('');
+        }
         const gearState = this.state.gearOnHand.find((element) => element.name === name);
         if (gearState !== undefined) {
             return gearState;

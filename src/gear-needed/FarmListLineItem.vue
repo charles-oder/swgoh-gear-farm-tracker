@@ -42,13 +42,13 @@ export default class FarmListLineItem extends SetupStateObservingView {
     private stateManager = SetupStateManager.shared;
     private gearList = GearList.shared;
 
+    protected stateDidChange(newValue?: SetupState, oldValue?: SetupState) {
+        this.state = new SetupStateHelper(newValue).getStateForGear(this.name);
+    }
+
     // noinspection JSUnusedLocalSymbols Template Data
     private stateChanged() {
         this.stateManager.setStateForGear(this.state);
-    }
-
-    protected stateDidChange(newValue?: SetupState, oldValue?: SetupState) {
-        this.state = new SetupStateHelper(newValue).getStateForGear(this.name);
     }
 
     // noinspection JSUnusedLocalSymbols Template Data
