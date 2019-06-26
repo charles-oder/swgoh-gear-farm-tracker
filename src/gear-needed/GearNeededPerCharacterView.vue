@@ -24,6 +24,8 @@ import SetupStateManager from '../state/SetupStateManager';
 import CharacterList from '@/CharacterList/CharacterList';
 import {GearList} from '@/data/GearList';
 import {GearIngredient} from '@/data/GearIngredient';
+import SetupStateObservingView from '@/components/SetupStateObservingView.vue';
+import SetupState from '@/state/SetupState';
 
 // noinspection JSUnusedGlobalSymbols export default Required by Vue
 @Component({
@@ -32,15 +34,19 @@ import {GearIngredient} from '@/data/GearIngredient';
 
     },
 })
-export default class GearNeededPerCharacterView extends Vue {
+export default class GearNeededPerCharacterView extends SetupStateObservingView {
 
     private stateManager = SetupStateManager.shared;
     private characterList = CharacterList.shared;
     private gearList = GearList.shared;
+    private characters: string[] = [];
 
-    // noinspection JSUnusedLocalSymbols Template Data
-    private get characters(): string[] {
-        return this.stateManager.selectedCharacters.map((element) => element.name);
+    protected stateDidChange(newValue?: SetupState, oldValue?: SetupState) {
+        if (newValue === undefined) {
+            this.characters = [];
+            return;
+        }
+        this.characters = newValue.characters.filter((element) => element.isSelected).map((e) => e.name);
     }
 
     private getMissingGearSlots(characterName: string): GearIngredient[] {
