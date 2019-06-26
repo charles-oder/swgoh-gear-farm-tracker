@@ -16,12 +16,14 @@
 
         protected setupState: SetupState = new SetupState();
 
+        // noinspection JSUnusedGlobalSymbols Lifecycle
         protected created() {
             this.stateObservableId = SetupStateManager.shared.getObservable().observe((newValue, oldValue) => {
                 this.stateDidChange(newValue, oldValue);
             });
         }
 
+        // noinspection JSUnusedGlobalSymbols Lifecycle
         protected destroyed() {
             SetupStateManager.shared.getObservable().unobserve(this.stateObservableId);
         }
