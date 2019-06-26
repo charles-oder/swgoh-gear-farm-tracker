@@ -1,4 +1,3 @@
-import {Watch} from 'vue-property-decorator';
 import Uuid from '@/utility/Uuid';
 
 export default class Observable<T> {

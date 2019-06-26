@@ -40,6 +40,7 @@ export default class FarmListLineItem extends Vue {
     private stateManager = SetupStateManager.shared;
     private gearList = GearList.shared;
 
+    // noinspection JSUnusedGlobalSymbols Lifecycle Method
     public mounted() {
         if (this.name === undefined) {
             return;
@@ -49,10 +50,12 @@ export default class FarmListLineItem extends Vue {
         this.originalState.amount = this.state.amount;
     }
 
+    // noinspection JSUnusedLocalSymbols Template Data
     private stateChanged() {
         this.stateManager.setStateForGear(this.state);
     }
 
+    // noinspection JSUnusedLocalSymbols Template Data
     private farmingLocations(): string {
         if (this.name === undefined) {
             return '';

@@ -22,12 +22,14 @@ export default class GearOnHand extends Vue {
     private stateManager = SetupStateManager.shared;
     private state: GearOnHandState = new GearOnHandState('');
 
+    // noinspection JSUnusedGlobalSymbols Lifecycle Method
     public mounted() {
         const name = this.gearName ? this.gearName : '';
 
         this.state = this.stateManager.getStateForGear(name);
     }
 
+    // noinspection JSUnusedLocalSymbols Template Data
     private stateChanged() {
         this.stateManager.setStateForGear(this.state);
     }

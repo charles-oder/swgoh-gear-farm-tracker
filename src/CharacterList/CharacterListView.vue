@@ -16,11 +16,12 @@
 </template>
 
 <script lang="ts">
-import {Component, Vue, Prop, Watch} from 'vue-property-decorator';
+import {Component, Vue, Watch} from 'vue-property-decorator';
 import CharacterList from '@/CharacterList/CharacterList';
 import CharacterSetupView from '@/CharacterList/CharacterSetupView.vue';
 import SetupStateManager from '@/state/SetupStateManager';
 
+// noinspection JSUnusedGlobalSymbols export default Required by Vue
 @Component({
     components: {
         CharacterSetupView,
@@ -33,6 +34,7 @@ export default class CharacterListView extends Vue {
     private stateManager = SetupStateManager.shared;
     private hideUnselected: boolean = false;
 
+    // noinspection JSUnusedGlobalSymbols Lifecycle Method
     public mounted() {
         this.hideUnselected = this.stateManager.hideUnselected;
     }
@@ -42,6 +44,7 @@ export default class CharacterListView extends Vue {
         this.stateManager.hideUnselected = newValue;
     }
 
+    // noinspection JSUnusedLocalSymbols Used in Template
     private characters(): string[] {
         if (this.hideUnselected) {
             return this.stateManager.selectedCharacters.map((element) => element.name).sort();

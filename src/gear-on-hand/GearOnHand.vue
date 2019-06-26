@@ -13,10 +13,10 @@
 
 <script lang="ts">
 import {Component, Vue} from 'vue-property-decorator';
-import SetupStateManager from '../state/SetupStateManager';
 import {GearList} from '@/data/GearList';
 import GearOnHandLineItem from '@/gear-on-hand/GearOnHandLineItem.vue';
 
+// noinspection JSUnusedGlobalSymbols export default Required by Vue
 @Component({
     components: {
         GearOnHandLineItem,

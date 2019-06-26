@@ -46,6 +46,7 @@
             this.visible = true;
         }
 
+        // noinspection JSUnusedGlobalSymbols Lifecycle Method
         public mounted() {
             AlertBus.shared.showDialog = this.show;
         }

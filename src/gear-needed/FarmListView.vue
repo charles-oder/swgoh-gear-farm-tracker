@@ -21,6 +21,7 @@ import GearOnHandState from '../state/GearOnHandState';
 import FarmListLineItem from '@/gear-needed/FarmListLineItem.vue';
 import SetupState from '@/state/SetupState';
 
+// noinspection JSUnusedGlobalSymbols export default Required by Vue
 @Component({
     components: {
         FarmListLineItem,
@@ -36,6 +37,7 @@ export default class FarmListView extends Vue {
     private needList: GearIngredient[] = [];
     private id: string = '';
 
+    // noinspection JSUnusedGlobalSymbols Lifecycle Method
     public created() {
         this.id = this.stateManager.getObservable().observe((newValue, oldValue) => {
             const state = newValue ? newValue : new SetupState();
@@ -43,6 +45,7 @@ export default class FarmListView extends Vue {
         });
     }
 
+    // noinspection JSUnusedGlobalSymbols Lifecycle Method
     public destroyed() {
         this.stateManager.getObservable().unobserve(this.id);
     }

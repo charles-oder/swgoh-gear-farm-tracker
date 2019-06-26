@@ -21,6 +21,7 @@ import {GearList} from '@/data/GearList';
 import {GearIngredient} from '@/data/GearIngredient';
 import CharacterSetupState from '../state/CharacterSetupState';
 
+// noinspection JSUnusedGlobalSymbols export default Required by Vue
 @Component({
     components: {
         CharacterSetupView,
@@ -56,6 +57,7 @@ export default class GearNeededPerCharacterView extends Vue {
         return list;
     }
 
+    // noinspection JSUnusedLocalSymbols Template Data
     private allNeededGear(): GearIngredient[] {
         const list: GearIngredient[] = [];
         this.characters.forEach((character) => list.push(...this.getMissingGearSlots(character)));

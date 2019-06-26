@@ -62,11 +62,13 @@ export default class CharacterSetupView extends Vue {
     private gearList = GearList.shared;
     private characterList = CharacterList.shared;
 
+    // noinspection JSUnusedLocalSymbols Template Data
     private get validTargetGearLevels() {
         const currentGearLevel = this.state.currentGearLevel;
         return this.validGearLevels.filter((element) => element >= currentGearLevel);
     }
 
+    // noinspection JSUnusedGlobalSymbols Lifecycle Method
     public mounted() {
         const name = this.characterName ? this.characterName : '';
 
@@ -77,6 +79,7 @@ export default class CharacterSetupView extends Vue {
         this.stateManager.setStateForCharacter(this.state);
     }
 
+    // noinspection JSUnusedLocalSymbols Template Data
     private gearUpdated(position: number) {
         if (this.state.gearItems[position]) {
             AlertBus.showDialog('Do you want to deduct this item\'s ingredients from your inventory?', 'Yes', () => {

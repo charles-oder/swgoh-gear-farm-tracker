@@ -25,6 +25,7 @@ import CharacterList from '@/CharacterList/CharacterList';
 import {GearList} from '@/data/GearList';
 import {GearIngredient} from '@/data/GearIngredient';
 
+// noinspection JSUnusedGlobalSymbols export default Required by Vue
 @Component({
     components: {
         CharacterSetupView,
@@ -37,6 +38,7 @@ export default class GearNeededPerCharacterView extends Vue {
     private characterList = CharacterList.shared;
     private gearList = GearList.shared;
 
+    // noinspection JSUnusedLocalSymbols Template Data
     private get characters(): string[] {
         return this.stateManager.selectedCharacters.map((element) => element.name);
     }
@@ -61,6 +63,7 @@ export default class GearNeededPerCharacterView extends Vue {
         return list;
     }
 
+    // noinspection JSUnusedLocalSymbols Template Data
     private flattenGearList(characterName: string): GearIngredient[] {
         const baseList = this.getMissingGearSlots(characterName);
         let flattenedList: GearIngredient[] = [];
