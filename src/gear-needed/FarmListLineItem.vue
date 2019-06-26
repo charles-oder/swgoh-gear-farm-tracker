@@ -22,6 +22,9 @@ import CharacterSetupView from '@/CharacterList/CharacterSetupView.vue';
 import SetupStateManager from '../state/SetupStateManager';
 import GearOnHandState from '@/state/GearOnHandState';
 import {GearList} from '@/data/GearList';
+import SetupStateObservingView from '@/components/SetupStateObservingView.vue';
+import SetupState from '@/state/SetupState';
+import SetupStateHelper from '@/state/SetupStateHelper';
 
 @Component({
     components: {
@@ -29,30 +32,23 @@ import {GearList} from '@/data/GearList';
 
     },
 })
-export default class FarmListLineItem extends Vue {
+export default class FarmListLineItem extends SetupStateObservingView {
 
     @Prop() public name?: string;
     @Prop() public amount?: number;
 
     private state: GearOnHandState = new GearOnHandState('');
-    private originalState: GearOnHandState = new GearOnHandState('');
 
     private stateManager = SetupStateManager.shared;
     private gearList = GearList.shared;
 
-    // noinspection JSUnusedGlobalSymbols Lifecycle Method
-    public mounted() {
-        if (this.name === undefined) {
-            return;
-        }
-        this.state = this.stateManager.getStateForGear(this.name);
-        this.originalState = new GearOnHandState(this.state.name);
-        this.originalState.amount = this.state.amount;
-    }
-
     // noinspection JSUnusedLocalSymbols Template Data
     private stateChanged() {
         this.stateManager.setStateForGear(this.state);
+    }
+
+    protected stateDidChange(newValue?: SetupState, oldValue?: SetupState) {
+        this.state = new SetupStateHelper(newValue).getStateForGear(this.name);
     }
 
     // noinspection JSUnusedLocalSymbols Template Data

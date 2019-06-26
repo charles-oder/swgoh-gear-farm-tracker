@@ -1,5 +1,6 @@
 import CharacterSetupState from '@/state/CharacterSetupState';
 import SetupState from '@/state/SetupState';
+import GearOnHandState from '@/state/GearOnHandState';
 
 export default class SetupStateHelper {
 
@@ -18,6 +19,14 @@ export default class SetupStateHelper {
             return new CharacterSetupState(name);
         }
         return filtered[0];
+    }
+
+    public getStateForGear(name: string): GearOnHandState {
+        const gearState = this.state.gearOnHand.find((element) => element.name === name);
+        if (gearState !== undefined) {
+            return gearState;
+        }
+        return new GearOnHandState(name);
     }
 
 }

@@ -10,9 +10,8 @@
 </template>
 
 <script lang="ts">
-import {Component, Vue} from 'vue-property-decorator';
+import {Component} from 'vue-property-decorator';
 import CharacterSetupView from '@/CharacterList/CharacterSetupView.vue';
-import SetupStateManager from '../state/SetupStateManager';
 import CharacterList from '@/CharacterList/CharacterList';
 import {GearList} from '@/data/GearList';
 import {GearIngredient} from '@/data/GearIngredient';
@@ -32,7 +31,6 @@ import SetupStateObservingView from '@/components/SetupStateObservingView.vue';
 })
 export default class FarmListView extends SetupStateObservingView {
 
-    private stateManager = SetupStateManager.shared;
     private characterList = CharacterList.shared;
     private gearList = GearList.shared;
     private needList: GearIngredient[] = [];
@@ -43,11 +41,8 @@ export default class FarmListView extends SetupStateObservingView {
 
     protected stateDidChange(newValue?: SetupState, oldValue?: SetupState) {
         const state = newValue ? newValue : new SetupState();
-        this.needList = this.allNeededGear(state.gearOnHand);
-    }
-
-    private get characters(): CharacterSetupState[] {
-        return this.stateManager.selectedCharacters;
+        const selectedCharacters = state.characters.filter((element) => element.isSelected);
+        this.needList = this.allNeededGear(state.gearOnHand, selectedCharacters);
     }
 
     private getMissingGearSlots(character: CharacterSetupState): GearIngredient[] {
@@ -69,9 +64,9 @@ export default class FarmListView extends SetupStateObservingView {
         return list;
     }
 
-    private allNeededGear(gearOnHand: GearOnHandState[]): GearIngredient[] {
+    private allNeededGear(gearOnHand: GearOnHandState[], characters: CharacterSetupState[]): GearIngredient[] {
         const list: GearIngredient[] = [];
-        this.characters.forEach((character) => list.push(...this.getMissingGearSlots(character)));
+        characters.forEach((character) => list.push(...this.getMissingGearSlots(character)));
         return this.subtractGearOnHand(this.flattenGearIngredients(list), gearOnHand)
             .sort((a, b) => b.amount - a.amount);
     }

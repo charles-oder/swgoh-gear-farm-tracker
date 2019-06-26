@@ -17,7 +17,9 @@ export default class SetupStateManager {
     private localStorageKey = 'swgohGearFarmTrackerState';
     private observable: Observable<SetupState> = new Observable<SetupState>(undefined);
 
-    private constructor() {}
+    private constructor() {
+        this.observable.value = this.pullValueFromStorage();
+    }
 
     public getObservable(): Observable<SetupState> {
         return this.observable;
