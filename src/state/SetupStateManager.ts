@@ -54,9 +54,9 @@ export default class SetupStateManager {
 
     public saveDataToCloud(state: SetupState = this.getState()) {
         FirebaseDataStore.shared.authenticate().then(() => {
-            FirebaseDataStore.shared.storeState(state, () => {
+            FirebaseDataStore.shared.storeState(state).then(() => {
                 AlertBus.alertMessage('state saved!!');
-            }, (error) => {
+            }).catch((error) => {
                 AlertBus.alertError('Error saving state: ' + error);
             });
         }).catch((error) => {

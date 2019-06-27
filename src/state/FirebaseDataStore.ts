@@ -65,16 +65,18 @@ export default class FirebaseDataStore {
 
     }
 
-    public storeState(state: SetupState, success: () => void, failure: (message: string) => void) {
-        if (this.databaseRef === undefined) {
-            failure('No database reference availalbe');
-            return;
-        }
-        const payload = new FirebaseStatePayload(JSON.stringify(state));
-        this.databaseRef.set(payload).then(() => {
-            success();
-        }).catch((error) => {
-            failure(JSON.stringify(error));
+    public storeState(state: SetupState): Promise<void> {
+        return new Promise<void>((accept, reject) => {
+            if (this.databaseRef === undefined) {
+                reject('No database reference availalbe');
+                return;
+            }
+            const payload = new FirebaseStatePayload(JSON.stringify(state));
+            this.databaseRef.set(payload).then(() => {
+                accept();
+            }).catch((error) => {
+                reject(JSON.stringify(error));
+            });
         });
     }
 
