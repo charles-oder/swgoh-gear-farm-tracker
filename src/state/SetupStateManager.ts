@@ -4,6 +4,7 @@ import GearOnHandState from '@/state/GearOnHandState';
 import Observable from '@/state/Observable';
 import FirebaseDataStore from '@/state/FirebaseDataStore';
 import AlertBus from '@/views/AlertBus';
+import AppLog from '@/AppLog';
 
 export default class SetupStateManager {
 
@@ -22,6 +23,7 @@ export default class SetupStateManager {
     private constructor() {
         this.observable.value = this.pullValueFromStorage();
         if (this.isAutoSaveToCloudOn) {
+            AppLog.log('AutoSave is on, pulling state from cloud');
             this.pullDataFromCloud();
         }
     }
@@ -46,8 +48,10 @@ export default class SetupStateManager {
     }
 
     public pullValueFromStorage(): SetupState {
+        AppLog.log('Pulling state from local storage...');
         const stateJson = localStorage[this.localStorageKey];
         if (stateJson === undefined) {
+            AppLog.log('No state found in local storage, creating new state.');
             return new SetupState();
         }
         return JSON.parse(stateJson);
@@ -60,37 +64,46 @@ export default class SetupStateManager {
     }
 
     public saveDataToCloudAndWait(state: SetupState = this.getState()): Promise<void> {
+        AppLog.log('saving state to cloud: ' + JSON.stringify(state));
         return new Promise<void>((accept, reject) => {
             FirebaseDataStore.shared.authenticate().then(() => {
                 FirebaseDataStore.shared.storeState(state).then(() => {
                     accept();
                 }).catch((error) => {
+                    AppLog.error('Error saving state: ' + error);
                     reject('Error saving state: ' + error);
                 });
             }).catch((error) => {
+                AppLog.error('login failure: ' + error);
                 reject('login failure: ' + error);
             });
         });
     }
 
     public pullDataFromCloud() {
+        AppLog.log('pulling state from cloud...');
         FirebaseDataStore.shared.authenticate().then(() => {
             FirebaseDataStore.shared.fetchState().then((state) => {
+                AppLog.log('State downloaded from cloud');
                 AlertBus.alertMessage('State downloaded from cloud');
                 this.setState(state);
             }).catch((error) => {
+                AppLog.error('Error saving state: ' + error);
                 AlertBus.alertError('Error saving state: ' + error);
             });
         }).catch((error) => {
+            AppLog.error('login failure: ' + error);
             AlertBus.alertError('login failure: ' + error);
         });
     }
 
 
     public setState(value: SetupState) {
+        AppLog.log('saving state: ' + JSON.stringify(value));
         this.observable.value = value;
         localStorage[this.localStorageKey] = JSON.stringify(value);
         if (this.isAutoSaveToCloudOn) {
+            AppLog.log('AutoSave is on, saving to cloud');
             this.saveDataToCloud(value);
         }
     }
@@ -112,6 +125,7 @@ export default class SetupStateManager {
     public getStateForCharacter(name: string): CharacterSetupState {
         const character = this.getState().characters.find((element) => element.name === name);
         if (character !== undefined) {
+            AppLog.error('Character name undefined');
             return character;
         }
         return new CharacterSetupState(name);
@@ -126,9 +140,10 @@ export default class SetupStateManager {
     }
 
     public getStateForGear(name: string): GearOnHandState {
-        const character = this.getState().gearOnHand.find((element) => element.name === name);
-        if (character !== undefined) {
-            return character;
+        const item = this.getState().gearOnHand.find((element) => element.name === name);
+        if (item !== undefined) {
+            AppLog.error('Gear name undefined');
+            return item;
         }
         return new GearOnHandState(name);
     }

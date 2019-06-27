@@ -51,6 +51,7 @@ import AlertBus from '@/views/AlertBus';
 import SetupStateObservingView from '@/components/SetupStateObservingView.vue';
 import SetupState from '@/state/SetupState';
 import SetupStateHelper from '@/state/SetupStateHelper';
+import AppLog from '@/AppLog';
 
 @Component({
     components: {},
@@ -92,13 +93,13 @@ export default class CharacterSetupView extends SetupStateObservingView {
             AlertBus.showDialog('Do you want to deduct this item\'s ingredients from your inventory?', 'Yes', () => {
                 const currentGearLevel = this.state.currentGearLevel;
                 if (this.characterName === undefined) {
-                    AlertBus.alertError('Character Name Undefined');
+                    AppLog.error('Character Name Undefined');
                     return;
                 }
                 const gearId = this.characterList.gearIdForCharacter(this.characterName,
                     currentGearLevel, position + 1);
                 if (gearId === undefined) {
-                    AlertBus.alertError('Gear ID Undefined');
+                    AppLog.error('Gear ID Undefined');
                     return;
                 }
                 const ingredients = this.gearList.ingredientsForGear(gearId);

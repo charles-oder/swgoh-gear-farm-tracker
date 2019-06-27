@@ -43,8 +43,11 @@
     })
     export default class App extends Vue {
 
-        private isAutoSaveOn: boolean = SetupStateManager.shared.isAutoSaveToCloudOn;
+        private isAutoSaveOn: boolean = false;
 
+        protected mounted() {
+            this.isAutoSaveOn = SetupStateManager.shared.isAutoSaveToCloudOn;
+        }
         private setAutoSave(newValue: boolean) {
             this.isAutoSaveOn = newValue;
             SetupStateManager.shared.isAutoSaveToCloudOn = newValue;
@@ -73,7 +76,7 @@
 
         private confirmPullFromCloud() {
             AlertBus.showDialog('Are you sure you want to overwrite your local data?', 'Yes', () => {
-                SetupStateManager.shared.pullDataFromCloud()
+                SetupStateManager.shared.pullDataFromCloud();
             });
         }
 

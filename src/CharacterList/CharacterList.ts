@@ -1,5 +1,5 @@
 import data from '@/assets/swgoh-character-list.json';
-import AlertBus from '@/views/AlertBus';
+import AppLog from '@/AppLog';
 
 const characterData: ICharacterData = data as ICharacterData;
 
@@ -31,16 +31,16 @@ export default class CharacterList {
     public gearIdForCharacter(name: string, level: number, slot: number): string | undefined {
         const character = this.characters.find((element) => element.name === name);
         if (character === undefined) {
-            AlertBus.alertError('Character not found: ' + name);
+            AppLog.warn('Character not found: ' + name);
             return undefined;
         }
         const gearLevel = character.gear_levels.find((element) => +element.tier === +level);
         if (gearLevel === undefined) {
-            AlertBus.alertError('Gear Level not found: ' + level + '\n' + JSON.stringify(character.gear_levels));
+            AppLog.warn('Gear Level not found: ' + level + '\n' + JSON.stringify(character.gear_levels));
             return undefined;
         }
         if (slot > gearLevel.gear.length || slot < 1) {
-            AlertBus.alertError('Gear Slot not found: ' + slot);
+            AppLog.warn('Gear Slot not found: ' + slot);
             return undefined;
         }
         return gearLevel.gear[slot - 1];
