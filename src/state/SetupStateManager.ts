@@ -21,16 +21,17 @@ export default class SetupStateManager {
 
     private constructor() {
         this.observable.value = this.pullValueFromStorage();
+        if (this.isAutoSaveToCloudOn) {
+            this.pullDataFromCloud();
+        }
     }
 
     public get isAutoSaveToCloudOn(): boolean {
-        return this.getState().autoSaveToCloud === true;
+        return localStorage.autoSaveToCloud;
     }
 
     public set isAutoSaveToCloudOn(newValue: boolean) {
-        const state = this.getState();
-        state.autoSaveToCloud = newValue;
-        this.setState(state);
+        localStorage.autoSaveToCloud = newValue;
     }
 
     public getObservable(): Observable<SetupState> {
@@ -53,14 +54,22 @@ export default class SetupStateManager {
     }
 
     public saveDataToCloud(state: SetupState = this.getState()) {
-        FirebaseDataStore.shared.authenticate().then(() => {
-            FirebaseDataStore.shared.storeState(state).then(() => {
-                AlertBus.alertMessage('state saved!!');
+        this.saveDataToCloudAndWait(state).catch((error) => {
+            AlertBus.alertError('Error saving state: ' + error);
+        });
+    }
+
+    public saveDataToCloudAndWait(state: SetupState = this.getState()): Promise<void> {
+        return new Promise<void>((accept, reject) => {
+            FirebaseDataStore.shared.authenticate().then(() => {
+                FirebaseDataStore.shared.storeState(state).then(() => {
+                    accept();
+                }).catch((error) => {
+                    reject('Error saving state: ' + error);
+                });
             }).catch((error) => {
-                AlertBus.alertError('Error saving state: ' + error);
+                reject('login failure: ' + error);
             });
-        }).catch((error) => {
-            AlertBus.alertError('login failure: ' + error);
         });
     }
 
@@ -81,6 +90,9 @@ export default class SetupStateManager {
     public setState(value: SetupState) {
         this.observable.value = value;
         localStorage[this.localStorageKey] = JSON.stringify(value);
+        if (this.isAutoSaveToCloudOn) {
+            this.saveDataToCloud(value);
+        }
     }
 
     public get hideUnselected(): boolean {

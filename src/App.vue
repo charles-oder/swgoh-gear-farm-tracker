@@ -12,12 +12,12 @@
             <router-link to="/gear-needed-total">Total Gear Needed</router-link>
             <div>
                 <span v-if="!isAutoSaveOn" >
-<!--                <a href="#" @click="confirmSetAutosave(true)">Turn On AutoSave</a> |-->
-                <a href="#" @click="confirmSaveToCloud">Save Data To Cloud</a> |
-                <a href="#" @click="confirmPullFromCloud">Load Data From Cloud</a>
+                    <a href="#" @click="confirmSetAutosave(true)">Turn On AutoSave</a> |
+                    <a href="#" @click="confirmSaveToCloud">Save Data To Cloud</a> |
+                    <a href="#" @click="confirmPullFromCloud">Load Data From Cloud</a>
                 </span>
                 <span v-if="isAutoSaveOn" >
-<!--                <a href="#" @click="confirmSetAutosave(false)">Turn Off AutoSave</a>-->
+                    <a href="#" @click="confirmSetAutosave(false)">Turn Off AutoSave</a>
                 </span>
             </div>
             <AlertView />
@@ -65,13 +65,15 @@
 
         private confirmSaveToCloud() {
             AlertBus.showDialog('Are you sure you want to overwrite your cloud data?', 'Yes', () => {
-                SetupStateManager.shared.saveDataToCloud();
+                SetupStateManager.shared.saveDataToCloudAndWait().then(() => {
+                    AlertBus.alertMessage('Data Saved');
+                });
             });
         }
 
         private confirmPullFromCloud() {
             AlertBus.showDialog('Are you sure you want to overwrite your local data?', 'Yes', () => {
-                SetupStateManager.shared.pullDataFromCloud();
+                SetupStateManager.shared.pullDataFromCloud()
             });
         }
 
