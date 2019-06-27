@@ -21,6 +21,8 @@ export default class CharacterList {
     public characterNames: string[];
     public characters: ICharacter[];
 
+    private tag = 'CharacterList';
+
     private constructor() {
         this.characters = characterData.data
             .sort((a, b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
@@ -31,16 +33,16 @@ export default class CharacterList {
     public gearIdForCharacter(name: string, level: number, slot: number): string | undefined {
         const character = this.characters.find((element) => element.name === name);
         if (character === undefined) {
-            AppLog.warn('Character not found: ' + name);
+            AppLog.warn(this.tag, 'Character not found: ' + name);
             return undefined;
         }
         const gearLevel = character.gear_levels.find((element) => +element.tier === +level);
         if (gearLevel === undefined) {
-            AppLog.warn('Gear Level not found: ' + level + '\n' + JSON.stringify(character.gear_levels));
+            AppLog.warn(this.tag, 'Gear Level not found: ' + level + '\n' + JSON.stringify(character.gear_levels));
             return undefined;
         }
         if (slot > gearLevel.gear.length || slot < 1) {
-            AppLog.warn('Gear Slot not found: ' + slot);
+            AppLog.warn(this.tag, 'Gear Slot not found: ' + slot);
             return undefined;
         }
         return gearLevel.gear[slot - 1];

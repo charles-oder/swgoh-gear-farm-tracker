@@ -65,6 +65,7 @@ export default class CharacterSetupView extends SetupStateObservingView {
     private stateManager = SetupStateManager.shared;
     private gearList = GearList.shared;
     private characterList = CharacterList.shared;
+    private tag = 'CharacterSetupView';
 
     // noinspection JSUnusedLocalSymbols Template Data
     private get validTargetGearLevels() {
@@ -93,13 +94,13 @@ export default class CharacterSetupView extends SetupStateObservingView {
             AlertBus.showDialog('Do you want to deduct this item\'s ingredients from your inventory?', 'Yes', () => {
                 const currentGearLevel = this.state.currentGearLevel;
                 if (this.characterName === undefined) {
-                    AppLog.error('Character Name Undefined');
+                    AppLog.error(this.tag, 'Character Name Undefined');
                     return;
                 }
                 const gearId = this.characterList.gearIdForCharacter(this.characterName,
                     currentGearLevel, position + 1);
                 if (gearId === undefined) {
-                    AppLog.error('Gear ID Undefined');
+                    AppLog.error(this.tag, 'Gear ID Undefined');
                     return;
                 }
                 const ingredients = this.gearList.ingredientsForGear(gearId);
