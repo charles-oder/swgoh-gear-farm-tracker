@@ -2,6 +2,8 @@ import SetupState from './SetupState';
 import CharacterSetupState from '@/state/CharacterSetupState';
 import GearOnHandState from '@/state/GearOnHandState';
 import Observable from '@/state/Observable';
+import FirebaseDataStore from '@/state/FirebaseDataStore';
+import AlertBus from '@/views/AlertBus';
 
 export default class SetupStateManager {
 
@@ -19,6 +21,16 @@ export default class SetupStateManager {
 
     private constructor() {
         this.observable.value = this.pullValueFromStorage();
+    }
+
+    public get isAutoSaveToCloudOn(): boolean {
+        return this.getState().autoSaveToCloud === true;
+    }
+
+    public set isAutoSaveToCloudOn(newValue: boolean) {
+        const state = this.getState();
+        state.autoSaveToCloud = newValue;
+        this.setState(state);
     }
 
     public getObservable(): Observable<SetupState> {
@@ -39,6 +51,32 @@ export default class SetupStateManager {
         }
         return JSON.parse(stateJson);
     }
+
+    public saveDataToCloud(state: SetupState = this.getState()) {
+        FirebaseDataStore.shared.authenticate(() => {
+            FirebaseDataStore.shared.storeState(state, () => {
+                AlertBus.alertMessage('state saved!!');
+            }, (error) => {
+                AlertBus.alertError('Error saving state: ' + error);
+            });
+        }, (error) => {
+            AlertBus.alertError('login failure: ' + error);
+        });
+    }
+
+    public pullDataFromCloud() {
+        FirebaseDataStore.shared.authenticate(() => {
+            FirebaseDataStore.shared.fetchState((state) => {
+                AlertBus.alertMessage('State downloaded from cloud');
+                this.setState(state);
+            }, (error) => {
+                AlertBus.alertError('Error saving state: ' + error);
+            });
+        }, (error) => {
+            AlertBus.alertError('login failure: ' + error);
+        });
+    }
+
 
     public setState(value: SetupState) {
         this.observable.value = value;

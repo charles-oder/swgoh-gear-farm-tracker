@@ -7,5 +7,6 @@ export default class SetupState {
     public characters: CharacterSetupState[] = [];
     public gearOnHand: GearOnHandState[] = [];
     public hideUnselected?: boolean;
+    public autoSaveToCloud?: boolean;
 
 }

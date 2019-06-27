@@ -10,8 +10,16 @@
             <router-link to="/gear-needed-per-character">Gear Needed/Character</router-link>
             |
             <router-link to="/gear-needed-total">Total Gear Needed</router-link>
-            <div><a href="#" @click="confirmSaveToCloud">Save Data To Cloud</a> |
-                <a href="#" @click="confirmPullFromCloud">Load Data From Cloud</a></div>
+            <div>
+                <span v-if="!isAutoSaveOn" >
+<!--                <a href="#" @click="confirmSetAutosave(true)">Turn On AutoSave</a> |-->
+                <a href="#" @click="confirmSaveToCloud">Save Data To Cloud</a> |
+                <a href="#" @click="confirmPullFromCloud">Load Data From Cloud</a>
+                </span>
+                <span v-if="isAutoSaveOn" >
+<!--                <a href="#" @click="confirmSetAutosave(false)">Turn Off AutoSave</a>-->
+                </span>
+            </div>
             <AlertView />
             <ModalDialog />
         </div>
@@ -35,44 +43,35 @@
     })
     export default class App extends Vue {
 
+        private isAutoSaveOn: boolean = SetupStateManager.shared.isAutoSaveToCloudOn;
+
+        private setAutoSave(newValue: boolean) {
+            this.isAutoSaveOn = newValue;
+            SetupStateManager.shared.isAutoSaveToCloudOn = newValue;
+        }
+
+        private confirmSetAutosave(autoSave: boolean) {
+            const message = autoSave
+                ? 'Are you sure you want to automatically download data from the cloud? This' +
+                ' will overwrite any existing local data.'
+                : 'Are you sure you want to turn off automatic cloud sync?';
+            AlertBus.showDialog(message, 'Yes', () => {
+                this.setAutoSave(autoSave);
+                if (autoSave) {
+                    SetupStateManager.shared.pullDataFromCloud();
+                }
+            });
+        }
 
         private confirmSaveToCloud() {
             AlertBus.showDialog('Are you sure you want to overwrite your cloud data?', 'Yes', () => {
-                this.saveDataToCloud();
+                SetupStateManager.shared.saveDataToCloud();
             });
         }
 
         private confirmPullFromCloud() {
             AlertBus.showDialog('Are you sure you want to overwrite your local data?', 'Yes', () => {
-                this.pullDataFromCloud();
-            });
-        }
-
-        private saveDataToCloud() {
-            const stateManager = SetupStateManager.shared;
-            const localState = stateManager.getState();
-            FirebaseDataStore.shared.authenticate(() => {
-                FirebaseDataStore.shared.storeState(localState, () => {
-                    AlertBus.alertMessage('state saved!!');
-                }, (error) => {
-                    AlertBus.alertError('Error saving state: ' + error);
-                });
-            }, (error) => {
-                AlertBus.alertError('login failure: ' + error);
-            });
-        }
-
-        private pullDataFromCloud() {
-            const stateManager = SetupStateManager.shared;
-            FirebaseDataStore.shared.authenticate(() => {
-                FirebaseDataStore.shared.fetchState((state) => {
-                    AlertBus.alertMessage('State downloaded from cloud');
-                    stateManager.setState(state);
-                }, (error) => {
-                    AlertBus.alertError('Error saving state: ' + error);
-                });
-            }, (error) => {
-                AlertBus.alertError('login failure: ' + error);
+                SetupStateManager.shared.pullDataFromCloud();
             });
         }
 
