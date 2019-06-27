@@ -12,12 +12,12 @@
             <router-link to="/gear-needed-total">Total Gear Needed</router-link>
             <div>
                 <span v-if="!isAutoSaveOn" >
-                    <a href="#" @click="confirmSetAutosave(true)">Turn On AutoSave</a> |
+                    <a href="#" @click="confirmSetAutosave(true)">Turn On Auto Cloud Sync</a> |
                     <a href="#" @click="confirmSaveToCloud">Save Data To Cloud</a> |
                     <a href="#" @click="confirmPullFromCloud">Load Data From Cloud</a>
                 </span>
                 <span v-if="isAutoSaveOn" >
-                    <a href="#" @click="confirmSetAutosave(false)">Turn Off AutoSave</a>
+                    <a href="#" @click="confirmSetAutosave(false)">Turn Off Auto Cloud Sync</a>
                 </span>
             </div>
             <AlertView />
