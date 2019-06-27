@@ -53,26 +53,26 @@ export default class SetupStateManager {
     }
 
     public saveDataToCloud(state: SetupState = this.getState()) {
-        FirebaseDataStore.shared.authenticate(() => {
+        FirebaseDataStore.shared.authenticate().then(() => {
             FirebaseDataStore.shared.storeState(state, () => {
                 AlertBus.alertMessage('state saved!!');
             }, (error) => {
                 AlertBus.alertError('Error saving state: ' + error);
             });
-        }, (error) => {
+        }).catch((error) => {
             AlertBus.alertError('login failure: ' + error);
         });
     }
 
     public pullDataFromCloud() {
-        FirebaseDataStore.shared.authenticate(() => {
+        FirebaseDataStore.shared.authenticate().then(() => {
             FirebaseDataStore.shared.fetchState((state) => {
                 AlertBus.alertMessage('State downloaded from cloud');
                 this.setState(state);
             }, (error) => {
                 AlertBus.alertError('Error saving state: ' + error);
             });
-        }, (error) => {
+        }).catch((error) => {
             AlertBus.alertError('login failure: ' + error);
         });
     }

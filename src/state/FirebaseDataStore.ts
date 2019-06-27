@@ -32,32 +32,34 @@ export default class FirebaseDataStore {
         this.app = firebase.initializeApp(firebaseConfig);
     }
 
-    public authenticate(success: () => void, failure: (error: string) => void) {
+    public authenticate(): Promise<void> {
         const provider = new firebase.auth.GoogleAuthProvider();
         provider.addScope('https://www.googleapis.com/auth/appstate');
 
-        firebase.auth(this.app).onAuthStateChanged((user) => {
-            if (user === null) {
-                firebase.auth(this.app).setPersistence(firebase.auth.Auth.Persistence.SESSION)
-                    .then(() => {
-                        firebase.auth(this.app).signInWithPopup(provider).then((credentials) => {
-                            if (credentials.user === null) {
-                                failure('No user data returned');
-                                return;
-                            }
-                            this.user = credentials.user;
-                            success();
-                        }).catch((error) => {
-                            failure(JSON.stringify(error));
+        return new Promise<void>((accept, reject) => {
+            firebase.auth(this.app).onAuthStateChanged((user) => {
+                if (user === null) {
+                    firebase.auth(this.app).setPersistence(firebase.auth.Auth.Persistence.SESSION)
+                        .then(() => {
+                            firebase.auth(this.app).signInWithPopup(provider).then((credentials) => {
+                                if (credentials.user === null) {
+                                    reject('No user data returned');
+                                    return;
+                                }
+                                this.user = credentials.user;
+                                accept();
+                            }).catch((error) => {
+                                reject(JSON.stringify(error));
+                            });
+                        })
+                        .catch((error) => {
+                            reject(JSON.stringify(error));
                         });
-                    })
-                    .catch((error) => {
-                        failure(JSON.stringify(error));
-                    });
-            } else {
-                this.user = user;
-                success();
-            }
+                } else {
+                    this.user = user;
+                    accept();
+                }
+            });
         });
 
 
