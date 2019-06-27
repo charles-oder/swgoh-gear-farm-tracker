@@ -20,6 +20,7 @@ export default class SetupStateManager {
 
     private localStorageKey = 'swgohGearFarmTrackerState';
     private observable: Observable<SetupState> = new Observable<SetupState>(undefined);
+    private authenticating: boolean = false;
 
     private constructor() {
         this.observable.value = this.pullValueFromStorage();
@@ -59,6 +60,11 @@ export default class SetupStateManager {
     }
 
     public saveDataToCloud(state: SetupState = this.getState()) {
+        if (this.authenticating) {
+            AppLog.log(this.tag, 'Already authenticating, waiting');
+            return;
+        }
+
         this.saveDataToCloudAndWait(state).catch((error) => {
             AlertBus.alertError('Error saving state: ' + error);
         });
@@ -67,7 +73,9 @@ export default class SetupStateManager {
     public saveDataToCloudAndWait(state: SetupState = this.getState()): Promise<void> {
         AppLog.verbose(this.tag, 'saving state to cloud: ' + JSON.stringify(state));
         return new Promise<void>((accept, reject) => {
+            this.authenticating = true;
             FirebaseDataStore.shared.authenticate().then(() => {
+                this.authenticating = false;
                 FirebaseDataStore.shared.storeState(state).then(() => {
                     AppLog.log(this.tag, 'Save successfully');
                     accept();
@@ -83,15 +91,21 @@ export default class SetupStateManager {
     }
 
     public pullDataFromCloud() {
+        if (this.authenticating) {
+            AppLog.log(this.tag, 'Already authenticating, waiting');
+            return;
+        }
         this.pullDataFromCloudAndWait().catch((e) => {
             AlertBus.alertError('Error fetching state: ' + e);
-        })
+        });
     }
 
     public pullDataFromCloudAndWait(): Promise<void> {
         AppLog.log(this.tag, 'pulling state from cloud...');
         return new Promise<void>((accept, reject) => {
+            this.authenticating = true;
             FirebaseDataStore.shared.authenticate().then(() => {
+                this.authenticating = false;
                 FirebaseDataStore.shared.fetchState().then((state) => {
                     AppLog.log(this.tag, 'State downloaded from cloud');
                     this.setState(state);
