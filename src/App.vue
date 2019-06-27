@@ -31,7 +31,6 @@
     import {Component, Vue} from 'vue-property-decorator';
     import ModalDialog from '@/views/ModalDialog.vue';
     import AlertView from '@/views/AlertView.vue';
-    import FirebaseDataStore from '@/state/FirebaseDataStore';
     import SetupStateManager from '@/state/SetupStateManager';
     import AlertBus from '@/views/AlertBus';
 
@@ -43,11 +42,8 @@
     })
     export default class App extends Vue {
 
-        private isAutoSaveOn: boolean = false;
+        private isAutoSaveOn: boolean = SetupStateManager.shared.isAutoSaveToCloudOn;
 
-        protected mounted() {
-            this.isAutoSaveOn = SetupStateManager.shared.isAutoSaveToCloudOn;
-        }
         private setAutoSave(newValue: boolean) {
             this.isAutoSaveOn = newValue;
             SetupStateManager.shared.isAutoSaveToCloudOn = newValue;
@@ -76,7 +72,9 @@
 
         private confirmPullFromCloud() {
             AlertBus.showDialog('Are you sure you want to overwrite your local data?', 'Yes', () => {
-                SetupStateManager.shared.pullDataFromCloud();
+                SetupStateManager.shared.pullDataFromCloudAndWait().then(() => {
+                    AlertBus.alertMessage('Data Loaded');
+                })
             });
         }
 

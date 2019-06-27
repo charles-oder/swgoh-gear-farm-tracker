@@ -30,11 +30,11 @@ export default class SetupStateManager {
     }
 
     public get isAutoSaveToCloudOn(): boolean {
-        return localStorage.autoSaveToCloud;
+        return localStorage.autoSaveToCloud === 'true';
     }
 
     public set isAutoSaveToCloudOn(newValue: boolean) {
-        localStorage.autoSaveToCloud = newValue;
+        localStorage.autoSaveToCloud = '' + newValue;
     }
 
     public getObservable(): Observable<SetupState> {

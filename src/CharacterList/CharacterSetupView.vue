@@ -75,9 +75,9 @@ export default class CharacterSetupView extends SetupStateObservingView {
 
     // noinspection JSUnusedGlobalSymbols Lifecycle Method
     public mounted() {
-        const name = this.characterName ? this.characterName : '';
-
-        this.state = this.stateManager.getStateForCharacter(name);
+        if (this.characterName !== undefined) {
+            this.state = this.stateManager.getStateForCharacter(this.characterName);
+        }
     }
 
     protected stateDidChange(newValue?: SetupState, oldValue?: SetupState) {
