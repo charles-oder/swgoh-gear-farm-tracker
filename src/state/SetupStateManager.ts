@@ -66,10 +66,10 @@ export default class SetupStateManager {
 
     public pullDataFromCloud() {
         FirebaseDataStore.shared.authenticate().then(() => {
-            FirebaseDataStore.shared.fetchState((state) => {
+            FirebaseDataStore.shared.fetchState().then((state) => {
                 AlertBus.alertMessage('State downloaded from cloud');
                 this.setState(state);
-            }, (error) => {
+            }).catch((error) => {
                 AlertBus.alertError('Error saving state: ' + error);
             });
         }).catch((error) => {

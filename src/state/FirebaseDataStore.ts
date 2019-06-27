@@ -80,18 +80,20 @@ export default class FirebaseDataStore {
         });
     }
 
-    public fetchState(success: (state: SetupState) => void, failure: (message: string) => void) {
-        if (this.databaseRef === undefined) {
-            failure('No database reference availalbe');
-            return;
-        }
-        this.databaseRef.once('value').then((data) => {
-            const json = JSON.stringify(data);
-            const statePayload = JSON.parse(json) as FirebaseStatePayload;
-            const state = JSON.parse(statePayload.stateJson) as SetupState;
-            success(state);
-        }).catch((error) => {
-            failure(JSON.stringify(error));
+    public fetchState(): Promise<SetupState> {
+        return new Promise<SetupState>((accept, reject) => {
+            if (this.databaseRef === undefined) {
+                reject('No database reference availalbe');
+                return;
+            }
+            this.databaseRef.once('value').then((data) => {
+                const json = JSON.stringify(data);
+                const statePayload = JSON.parse(json) as FirebaseStatePayload;
+                const state = JSON.parse(statePayload.stateJson) as SetupState;
+                accept(state);
+            }).catch((error) => {
+                reject(JSON.stringify(error));
+            });
         });
     }
     private get databaseRef(): firebase.database.Reference | undefined {
