@@ -7,6 +7,9 @@
             <router-link class="nav-button" to="/gear-on-hand">Gear On Hand</router-link>
             <router-link class="nav-button" to="/gear-needed-per-character">Gear Needed/Character</router-link>
             <router-link class="nav-button" to="/gear-needed-total">Total Gear Needed</router-link>
+            <div class="nav-button">
+                <a href="#" @click="fetchCharacterData()">Fetch Character Data</a>
+            </div>
             <div class="nav-button" v-if="!isAutoSaveOn">
                 <a href="#" @click="confirmSetAutosave(true)">Turn On Auto Cloud Sync</a>
             </div>
@@ -21,6 +24,7 @@
             </div>
             <AlertView />
             <ModalDialog />
+            <PullCharacterData />
         </div>
         <router-view/>
     </div>
@@ -32,9 +36,11 @@
     import AlertView from '@/views/AlertView.vue';
     import SetupStateManager from '@/state/SetupStateManager';
     import AlertBus from '@/views/AlertBus';
+    import PullCharacterData from '@/views/PullCharacterData.vue';
 
     @Component({
         components: {
+            PullCharacterData,
             AlertView,
             ModalDialog,
         },
@@ -46,6 +52,10 @@
         private setAutoSave(newValue: boolean) {
             this.isAutoSaveOn = newValue;
             SetupStateManager.shared.isAutoSaveToCloudOn = newValue;
+        }
+
+        private fetchCharacterData() {
+            PullCharacterData.show();
         }
 
         private confirmSetAutosave(autoSave: boolean) {
