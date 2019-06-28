@@ -49,6 +49,9 @@
 
         private isAutoSaveOn: boolean = SetupStateManager.shared.isAutoSaveToCloudOn;
 
+        protected mounted() {
+            this.$ga.event('app', 'launch');
+        }
         private setAutoSave(newValue: boolean) {
             this.isAutoSaveOn = newValue;
             SetupStateManager.shared.isAutoSaveToCloudOn = newValue;
