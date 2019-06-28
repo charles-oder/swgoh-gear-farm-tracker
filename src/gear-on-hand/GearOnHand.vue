@@ -29,6 +29,11 @@ export default class GearOnHand extends Vue {
     public allGearNames(): string[] {
         return this.gearList.allGearNames();
     }
+
+    protected mounted() {
+        this.$ga.page('GearOnHand');
+    }
+
 }
 </script>
 

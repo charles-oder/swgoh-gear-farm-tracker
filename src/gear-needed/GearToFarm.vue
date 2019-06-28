@@ -39,6 +39,10 @@ export default class GearToFarm extends SetupStateObservingView {
         return this.needList;
     }
 
+    protected mounted() {
+        this.$ga.page('GearToFarm');
+    }
+
     protected stateDidChange(newValue?: SetupState, oldValue?: SetupState) {
         const state = newValue ? newValue : new SetupState();
         const selectedCharacters = state.characters.filter((element) => element.isSelected);

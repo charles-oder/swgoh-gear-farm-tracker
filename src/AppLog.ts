@@ -1,4 +1,5 @@
 
+
 export default class AppLog {
 
     public static logLevel: number = 2;

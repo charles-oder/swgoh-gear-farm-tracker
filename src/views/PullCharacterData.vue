@@ -54,7 +54,8 @@
         }
 
         private positiveButtonClicked() {
-            console.log('Fetch Ally Code: ' + this.allyCode);
+            AppLog.log(this.tag, 'Fetch Ally Code: ' + this.allyCode);
+            this.$ga.event('fetch-character-data');
             this.working = true;
             this.service.getCharacterData(this.allyCode).then((data) => {
                 data.units.forEach((remoteCharacter) => {

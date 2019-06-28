@@ -37,6 +37,10 @@ export default class GearNeededPerCharacterView extends SetupStateObservingView 
     private gearList = GearList.shared;
     private characters: CharacterSetupState[] = [];
 
+    protected mounted() {
+        this.$ga.page('GearNeededPerCharacterView');
+    }
+
     protected stateDidChange(newValue?: SetupState, oldValue?: SetupState) {
         if (newValue === undefined) {
             this.characters = [];

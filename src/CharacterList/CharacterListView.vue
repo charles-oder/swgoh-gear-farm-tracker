@@ -50,6 +50,7 @@ export default class CharacterListView extends Vue {
     // noinspection JSUnusedGlobalSymbols Lifecycle Method
     public mounted() {
         this.hideUnselected = this.stateManager.hideUnselected;
+        this.$ga.page('CharacterListView');
     }
 
     public clearFilter() {
