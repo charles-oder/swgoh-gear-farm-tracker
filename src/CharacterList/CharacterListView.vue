@@ -57,7 +57,6 @@ export default class CharacterListView extends Vue {
     }
 
     public categories(): string[] {
-        AppLog.log('TAG', 'categories: ' + this.characterList.allCategories());
         return this.characterList.allCategories();
     }
 
