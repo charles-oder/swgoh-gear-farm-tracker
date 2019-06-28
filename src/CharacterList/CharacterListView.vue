@@ -2,6 +2,7 @@
     <div class="character-list">
         <h1>Character List</h1>
         <div>
+            <label>Filter: <input v-model="nameFilter" type="text"></label>
             <label>
                 Hide Unselected
                 <input v-model="hideUnselected" type="checkbox"/>
@@ -33,6 +34,7 @@ export default class CharacterListView extends Vue {
     private characterList = CharacterList.shared;
     private stateManager = SetupStateManager.shared;
     private hideUnselected: boolean = false;
+    private nameFilter: string = '';
 
     // noinspection JSUnusedGlobalSymbols Lifecycle Method
     public mounted() {
@@ -49,7 +51,7 @@ export default class CharacterListView extends Vue {
         if (this.hideUnselected) {
             return this.stateManager.selectedCharacters.map((element) => element.name).sort();
         }
-        return this.characterList.characterNames;
+        return this.characterList.characterNames.filter((e) => e.includes(this.nameFilter));
     }
 }
 </script>
