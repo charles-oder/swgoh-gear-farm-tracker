@@ -8,10 +8,10 @@
             <router-link class="nav-button" to="/gear-needed-per-character">Gear Needed/Character</router-link>
             <router-link class="nav-button" to="/gear-needed-total">Total Gear Needed</router-link>
             <div class="nav-button" v-if="!isAutoSaveOn">
-                <a href="#" @click="confirmSetAutosave(true)">Turn On Auto Cloud Sync</a> |
+                <a href="#" @click="confirmSetAutosave(true)">Turn On Auto Cloud Sync</a>
             </div>
             <div class="nav-button" v-if="!isAutoSaveOn">
-                <a href="#" @click="confirmSaveToCloud">Save Data To Cloud</a> |
+                <a href="#" @click="confirmSaveToCloud">Save Data To Cloud</a>
             </div>
             <div class="nav-button" v-if="!isAutoSaveOn">
                 <a href="#" @click="confirmPullFromCloud">Load Data From Cloud</a>
@@ -51,7 +51,7 @@
         private confirmSetAutosave(autoSave: boolean) {
             const message = autoSave
                 ? 'Are you sure you want to automatically download data from the cloud? This' +
-                ' will overwrite any existing local data.'
+                ' will overwrite any existing local data. (May require enabling popups)'
                 : 'Are you sure you want to turn off automatic cloud sync?';
             AlertBus.showDialog(message, 'Yes', () => {
                 this.setAutoSave(autoSave);
@@ -62,7 +62,8 @@
         }
 
         private confirmSaveToCloud() {
-            AlertBus.showDialog('Are you sure you want to overwrite your cloud data?', 'Yes', () => {
+            AlertBus.showDialog('Are you sure you want to overwrite your cloud data? (May require enabling popups)',
+                'Yes', () => {
                 SetupStateManager.shared.saveDataToCloudAndWait().then(() => {
                     AlertBus.alertMessage('Data Saved');
                 });
@@ -70,7 +71,8 @@
         }
 
         private confirmPullFromCloud() {
-            AlertBus.showDialog('Are you sure you want to overwrite your local data?', 'Yes', () => {
+            AlertBus.showDialog('Are you sure you want to overwrite your local data? (May require enabling popups)' ,
+                'Yes', () => {
                 SetupStateManager.shared.pullDataFromCloudAndWait().then(() => {
                     AlertBus.alertMessage('Data Loaded');
                 })
