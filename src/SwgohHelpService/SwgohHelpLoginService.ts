@@ -22,5 +22,5 @@ export default class SwgohHelpLoginService extends SwgohHelpBaseService<ISwgohLo
 }
 
 interface ISwgohLoginResponse {
-    access_token: string
+    access_token: string;
 }

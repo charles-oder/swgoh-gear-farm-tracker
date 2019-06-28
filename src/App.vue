@@ -75,7 +75,7 @@
                 'Yes', () => {
                 SetupStateManager.shared.pullDataFromCloudAndWait().then(() => {
                     AlertBus.alertMessage('Data Loaded');
-                })
+                });
             });
         }
 
