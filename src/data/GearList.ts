@@ -100,6 +100,21 @@ export class GearList {
         return output;
     }
 
+    public getLocationsForGear(name: string): ILocation[] {
+        if (name === undefined) {
+            return [];
+        }
+        const gearEntry = gearLocations.gearList.find((element) => element.name === name);
+        if (gearEntry === undefined) {
+            return [];
+        }
+        const output: ILocation[] = [];
+        gearEntry.locations.filter((e) => e.cost <= 10).forEach((element) => {
+            output.push(element);
+        });
+        return output;
+    }
+
     private sortByMark(left: string, right: string): number {
         return this.getMarkFromString(right) - this.getMarkFromString(left);
     }
