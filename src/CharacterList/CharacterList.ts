@@ -47,6 +47,16 @@ export default class CharacterList {
         }
         return gearLevel.gear[slot - 1];
     }
+
+    public allCategories(): string[] {
+        const result: Set<string> = new Set<string>();
+        this.characters.forEach((c) => {
+            c.categories.forEach((e) => {
+                result.add(e);
+            });
+        });
+        return Array.from(result);
+    }
 }
 
 interface ICharacterData {
@@ -56,6 +66,7 @@ interface ICharacterData {
 interface ICharacter {
     name: string;
     gear_levels: IGearLevel[];
+    categories: string[];
 }
 
 interface IGearLevel {

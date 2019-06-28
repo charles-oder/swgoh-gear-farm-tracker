@@ -2,18 +2,20 @@
     <div class="character-list">
         <h1>Character List</h1>
         <div>
-            <form>
                 <input name="focus"
                               class="search-box"
                               v-model="nameFilter"
                               type="text"
                               placeholder="Search by Name" />
                 <button class="close-icon" type="reset" @click="clearFilter()"></button>
+                <select class="search-box" v-model="categoryFilter">
+                    <option selected>All</option>
+                    <option v-for="category in categories()" :key="category">{{category}}</option>
+                </select>
                 <label>
                     Hide Unselected
                     <input v-model="hideUnselected" type="checkbox"/>
                 </label>
-            </form>
         </div>
         <ul>
             <li v-for="character in characters()" :key="character">
@@ -28,6 +30,7 @@ import {Component, Vue, Watch} from 'vue-property-decorator';
 import CharacterList from '@/CharacterList/CharacterList';
 import CharacterSetupView from '@/CharacterList/CharacterSetupView.vue';
 import SetupStateManager from '@/state/SetupStateManager';
+import AppLog from '@/AppLog';
 
 // noinspection JSUnusedGlobalSymbols export default Required by Vue
 @Component({
@@ -42,6 +45,7 @@ export default class CharacterListView extends Vue {
     private stateManager = SetupStateManager.shared;
     private hideUnselected: boolean = false;
     private nameFilter: string = '';
+    private categoryFilter: string = 'All';
 
     // noinspection JSUnusedGlobalSymbols Lifecycle Method
     public mounted() {
@@ -52,6 +56,11 @@ export default class CharacterListView extends Vue {
         this.nameFilter = '';
     }
 
+    public categories(): string[] {
+        AppLog.log('TAG', 'categories: ' + this.characterList.allCategories());
+        return this.characterList.allCategories();
+    }
+
     @Watch('hideUnselected')
     public hideUnselectedChanged(newValue: boolean, oldValue: boolean) {
         this.stateManager.hideUnselected = newValue;
@@ -59,10 +68,17 @@ export default class CharacterListView extends Vue {
 
     // noinspection JSUnusedLocalSymbols Used in Template
     private characters(): string[] {
-        if (this.hideUnselected) {
-            return this.stateManager.selectedCharacters.map((element) => element.name).sort();
-        }
-        return this.characterList.characterNames.filter((e) => e.toLowerCase().includes(this.nameFilter.toLowerCase()));
+        const selectednames = this.stateManager.selectedCharacters.map((element) => element.name);
+        return this.characterList.characters.filter((c) => {
+            if (this.categoryFilter === 'All') {
+                return true;
+            }
+            return c.categories.includes(this.categoryFilter);
+        }).filter((c) => {
+            return c.name.toLowerCase().includes(this.nameFilter.toLowerCase());
+        }).filter((c) => {
+            return this.hideUnselected ? selectednames.includes(c.name) : true;
+        }).map((c) => c.name).sort();
     }
 }
 </script>
@@ -83,7 +99,7 @@ export default class CharacterListView extends Vue {
 
     .search-box,.close-icon {
         position: relative;
-        padding: 10px;
+        padding: 5px;
     }
     .search-box {
         width: 200px;
@@ -109,13 +125,13 @@ export default class CharacterListView extends Vue {
         height: 15px;
         position: absolute;
         z-index:1;
-        right: 35px;
+        right: 15px;
         top: 0;
         bottom: 0;
         margin: auto;
         padding: 2px;
         text-align: center;
-        color: black;
+        color: #333;
         font-weight: normal;
         font-size: 12px;
         cursor: pointer;
