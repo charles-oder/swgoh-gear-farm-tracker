@@ -51,7 +51,7 @@ export default class CharacterListView extends Vue {
         if (this.hideUnselected) {
             return this.stateManager.selectedCharacters.map((element) => element.name).sort();
         }
-        return this.characterList.characterNames.filter((e) => e.includes(this.nameFilter));
+        return this.characterList.characterNames.filter((e) => e.toLowerCase().includes(this.nameFilter.toLowerCase()));
     }
 }
 </script>
