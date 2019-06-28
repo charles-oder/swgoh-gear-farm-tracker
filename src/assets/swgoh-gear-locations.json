@@ -5600,6 +5600,37 @@
         }
       ],
       "name": "Mk 7 Nubian Design Tech Salvage"
+    },
+    {
+      "name": "Injector Cell Salvage",
+      "locations": [
+        {
+          "name": "Light Side Normal 8-E",
+          "cost": 10
+        },
+        {
+          "name": "Light Side Normal 8-H",
+          "cost": 10
+        },
+        {
+          "name": "Dark Side Normal 8-E",
+          "cost": 10
+        }
+      ],
+      "cheapestLocations": [
+        {
+          "name": "Light Side Normal 8-E",
+          "cost": 10
+        },
+        {
+          "name": "Light Side Normal 8-H",
+          "cost": 10
+        },
+        {
+          "name": "Dark Side Normal 8-E",
+          "cost": 10
+        }
+      ]
     }
   ]
 }
