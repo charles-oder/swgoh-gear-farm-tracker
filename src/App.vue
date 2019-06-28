@@ -1,24 +1,22 @@
 <template>
     <div id="app">
         <div id="nav">
-            <router-link to="/characters">Character Setup</router-link>
-            |
-            <router-link to="/farm-list">Farm List</router-link>
-            |
-            <router-link to="/gear-on-hand">Gear On Hand</router-link>
-            |
-            <router-link to="/gear-needed-per-character">Gear Needed/Character</router-link>
-            |
-            <router-link to="/gear-needed-total">Total Gear Needed</router-link>
-            <div>
-                <span v-if="!isAutoSaveOn" >
-                    <a href="#" @click="confirmSetAutosave(true)">Turn On Auto Cloud Sync</a> |
-                    <a href="#" @click="confirmSaveToCloud">Save Data To Cloud</a> |
-                    <a href="#" @click="confirmPullFromCloud">Load Data From Cloud</a>
-                </span>
-                <span v-if="isAutoSaveOn" >
-                    <a href="#" @click="confirmSetAutosave(false)">Turn Off Auto Cloud Sync</a>
-                </span>
+            <router-link class="nav-button" to="/characters">Character Setup</router-link>
+            <router-link class="nav-button" to="/farm-list">Farm List</router-link>
+            <router-link class="nav-button" to="/gear-on-hand">Gear On Hand</router-link>
+            <router-link class="nav-button" to="/gear-needed-per-character">Gear Needed/Character</router-link>
+            <router-link class="nav-button" to="/gear-needed-total">Total Gear Needed</router-link>
+            <div class="nav-button" v-if="!isAutoSaveOn">
+                <a href="#" @click="confirmSetAutosave(true)">Turn On Auto Cloud Sync</a> |
+            </div>
+            <div class="nav-button" v-if="!isAutoSaveOn">
+                <a href="#" @click="confirmSaveToCloud">Save Data To Cloud</a> |
+            </div>
+            <div class="nav-button" v-if="!isAutoSaveOn">
+                <a href="#" @click="confirmPullFromCloud">Load Data From Cloud</a>
+            </div>
+            <div class="nav-button" v-if="isAutoSaveOn">
+                <a href="#" @click="confirmSetAutosave(false)">Turn Off Auto Cloud Sync</a>
             </div>
             <AlertView />
             <ModalDialog />
@@ -82,6 +80,12 @@
 </script>
 
 <style lang="scss">
+
+    .nav-button {
+        margin: 0.4em;
+        padding:0.4em;
+        display: inline-block;
+    }
     #app {
         font-family: 'Avenir', Helvetica, Arial, sans-serif;
         -webkit-font-smoothing: antialiased;
@@ -95,10 +99,10 @@
 
         a {
             font-weight: bold;
-            color: #2c3e50;
-
+            color: #f4cbb9;
+            text-decoration: none;
             &.router-link-exact-active {
-                color: #42b983;
+                color: #a6827c;
             }
         }
     }
