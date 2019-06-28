@@ -20,11 +20,10 @@
     import AppLog from '@/AppLog';
     import SetupStateManager from '@/state/SetupStateManager';
     @Component({
-        components: {Spinner}
+        components: {Spinner},
     })
     export default class PullCharacterData extends Vue {
 
-        private static instance?: PullCharacterData;
 
         public static show() {
             if (this.instance === undefined) {
@@ -32,6 +31,8 @@
             }
             this.instance!.show();
         }
+
+        private static instance?: PullCharacterData;
 
         private visible: boolean = false;
         private working: boolean = false;
