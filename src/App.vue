@@ -2,7 +2,7 @@
     <div id="app">
         <div id="nav">
             <router-link class="nav-button" to="/characters">Character Setup</router-link>
-            <router-link class="nav-button" to="/farm-list">Farm List</router-link>
+            <router-link class="nav-button" to="/gear-to-farm">Gear to Farm</router-link>
             <router-link class="nav-button" to="/gear-on-hand">Gear On Hand</router-link>
             <router-link class="nav-button" to="/gear-needed-per-character">Gear Needed/Character</router-link>
             <router-link class="nav-button" to="/gear-needed-total">Total Gear Needed</router-link>

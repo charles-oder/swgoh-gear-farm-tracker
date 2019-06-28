@@ -32,7 +32,7 @@ import SetupStateHelper from '@/state/SetupStateHelper';
 
     },
 })
-export default class FarmListLineItem extends SetupStateObservingView {
+export default class GearToFarmLineItem extends SetupStateObservingView {
 
     @Prop() public name?: string;
     @Prop() public amount?: number;

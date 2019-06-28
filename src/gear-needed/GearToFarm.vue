@@ -17,7 +17,7 @@ import {GearList} from '@/data/GearList';
 import {GearIngredient} from '@/data/GearIngredient';
 import CharacterSetupState from '../state/CharacterSetupState';
 import GearOnHandState from '../state/GearOnHandState';
-import FarmListLineItem from '@/gear-needed/FarmListLineItem.vue';
+import FarmListLineItem from '@/gear-needed/GearToFarmLineItem.vue';
 import SetupState from '@/state/SetupState';
 import SetupStateObservingView from '@/components/SetupStateObservingView.vue';
 
@@ -29,7 +29,7 @@ import SetupStateObservingView from '@/components/SetupStateObservingView.vue';
 
     },
 })
-export default class FarmListView extends SetupStateObservingView {
+export default class GearToFarm extends SetupStateObservingView {
 
     private characterList = CharacterList.shared;
     private gearList = GearList.shared;
