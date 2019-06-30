@@ -144,6 +144,4 @@ export default class CharacterListView extends Vue {
     .filter-controls {
         padding: 10px;
     }
-    @media only screen and (max-width: 700px) {
-    }
 </style>

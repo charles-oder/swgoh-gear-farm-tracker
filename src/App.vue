@@ -1,32 +1,36 @@
 <template>
     <div id="app">
-        <div id="nav">
+        <div class="menu-button" @click="openMenu()">Menu</div>
+        <div id="nav" :class="menuClass()">
+            <div class="nav-button close-button" @click="closeMenu()">
+                <a href="#">Close</a>
+            </div>
             <router-link class="nav-button" to="/characters">Character Setup</router-link>
             <router-link class="nav-button" to="/gear-to-farm">Gear to Farm</router-link>
             <router-link class="nav-button" to="/locations-to-farm">Locations to Farm</router-link>
             <router-link class="nav-button" to="/gear-on-hand">Gear On Hand</router-link>
             <router-link class="nav-button" to="/gear-needed-per-character">Gear Needed/Character</router-link>
             <router-link class="nav-button" to="/gear-needed-total">Total Gear Needed</router-link>
-            <div class="nav-button">
-                <a href="#" @click="fetchCharacterData()">Fetch Character Data</a>
+            <div class="nav-button" @click="fetchCharacterData()">
+                <a href="#">Fetch Character Data</a>
             </div>
-            <div class="nav-button" v-if="!isAutoSaveOn">
-                <a href="#" @click="confirmSetAutosave(true)">Turn On Auto Cloud Sync</a>
+            <div class="nav-button" v-if="!isAutoSaveOn" @click="confirmSetAutosave(true)">
+                <a href="#">Turn On Auto Cloud Sync</a>
             </div>
-            <div class="nav-button" v-if="!isAutoSaveOn">
-                <a href="#" @click="confirmSaveToCloud">Save Data To Cloud</a>
+            <div class="nav-button" v-if="!isAutoSaveOn" @click="confirmSaveToCloud">
+                <a href="#">Save Data To Cloud</a>
             </div>
-            <div class="nav-button" v-if="!isAutoSaveOn">
-                <a href="#" @click="confirmPullFromCloud">Load Data From Cloud</a>
+            <div class="nav-button" v-if="!isAutoSaveOn" @click="confirmPullFromCloud">
+                <a href="#">Load Data From Cloud</a>
             </div>
-            <div class="nav-button" v-if="isAutoSaveOn">
-                <a href="#" @click="confirmSetAutosave(false)">Turn Off Auto Cloud Sync</a>
+            <div class="nav-button" v-if="isAutoSaveOn" @click="confirmSetAutosave(false)">
+                <a href="#">Turn Off Auto Cloud Sync</a>
             </div>
-            <AlertView />
-            <ModalDialog />
-            <PullCharacterData />
         </div>
-        <router-view/>
+        <AlertView />
+        <ModalDialog />
+        <PullCharacterData />
+        <router-view id="page-container"/>
     </div>
 </template>
 
@@ -48,6 +52,7 @@
     export default class App extends Vue {
 
         private isAutoSaveOn: boolean = SetupStateManager.shared.isAutoSaveToCloudOn;
+        private menuOpen: boolean = false;
 
         protected mounted() {
             this.$ga.event('app', 'launch');
@@ -55,6 +60,18 @@
         private setAutoSave(newValue: boolean) {
             this.isAutoSaveOn = newValue;
             SetupStateManager.shared.isAutoSaveToCloudOn = newValue;
+        }
+
+        private closeMenu() {
+            this.menuOpen = false;
+        }
+
+        private openMenu() {
+            this.menuOpen = true;
+        }
+
+        private menuClass() {
+            return this.menuOpen ? 'menu-open' : 'menu-closed';
         }
 
         private fetchCharacterData() {
@@ -97,10 +114,24 @@
 
 <style lang="scss">
 
+    .close-button {
+    }
+
+    .menu-button {
+        visibility: hidden;
+        position: absolute;
+        padding: 20px;
+        top: 0;
+        right: 0;
+        cursor: pointer;
+    }
+
     .nav-button {
         margin: 0.4em;
         padding:0.4em;
         display: inline-block;
+        cursor: pointer;
+
     }
     #app {
         font-family: 'Avenir', Helvetica, Arial, sans-serif;
@@ -112,6 +143,7 @@
 
     #nav {
         padding: 30px;
+        display: block;
 
         a {
             font-weight: bold;
@@ -121,5 +153,60 @@
                 color: #a6827c;
             }
         }
+
     }
+
+    #page-container {
+        z-index: -1;
+    }
+
+    @media only screen and (min-width: 1020px) {
+        .close-button {
+            visibility: hidden;
+        }
+    }
+
+    @media only screen and (max-width: 1020px) {
+        .close-button {
+        }
+
+        .menu-open {
+            visibility: visible;
+        }
+
+        .menu-closed {
+            visibility: hidden;
+        }
+
+        .menu-button {
+            visibility: visible;
+            color: #333;
+        }
+
+        .nav-button {
+            width: 100%;
+        }
+
+        #nav {
+            z-index: 1;
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 60%;
+            max-width: 20em;
+            height: 100%;
+            background-color: #333;
+            padding: 0;
+            text-align: left;
+            a {
+                color: #CCC;
+                width: 100%;
+                &.router-link-exact-active {
+                    color: #CCC;
+                    background-color: #666;
+                }
+            }
+        }
+    }
+
 </style>
