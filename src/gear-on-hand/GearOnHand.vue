@@ -49,12 +49,13 @@ export default class GearOnHand extends Vue {
     }
 
     .gear-on-hand-list {
-        width: 100%;
+        width: 90%;
     }
 
     .list-container {
+        padding: 20px;
         width: 30em;
-        margin-left: 50%;
-        transform: translateX(-50%);
+        max-width: 90%;
+        margin: auto;
     }
 </style>

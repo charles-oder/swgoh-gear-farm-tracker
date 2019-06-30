@@ -116,6 +116,7 @@ export default class GearToFarm extends SetupStateObservingView {
         list-style: none;
         padding-left: 0;
         width: 30em;
+        max-width: 90%;
         margin-left: 50%;
         transform: translateX(-50%);
     }

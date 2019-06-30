@@ -1,7 +1,7 @@
 <template>
     <div class="character-list">
         <h1>Character List</h1>
-        <div>
+        <div class="filter-controls">
                 <input name="focus"
                               class="search-box"
                               v-model="nameFilter"
@@ -12,10 +12,12 @@
                     <option selected>All</option>
                     <option v-for="category in categories()" :key="category">{{category}}</option>
                 </select>
-                <label>
-                    Hide Unselected
-                    <input v-model="hideUnselected" type="checkbox"/>
-                </label>
+                <div>
+                    <label>
+                        Hide Unselected
+                        <input v-model="hideUnselected" type="checkbox"/>
+                    </label>
+                </div>
         </div>
         <ul>
             <li v-for="character in characters()" :key="character">
@@ -138,5 +140,10 @@ export default class CharacterListView extends Vue {
     }
     .search-box:not(:valid) ~ .close-icon {
         display: none;
+    }
+    .filter-controls {
+        padding: 10px;
+    }
+    @media only screen and (max-width: 700px) {
     }
 </style>

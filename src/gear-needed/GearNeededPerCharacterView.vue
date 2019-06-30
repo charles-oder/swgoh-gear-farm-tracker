@@ -111,8 +111,8 @@ export default class GearNeededPerCharacterView extends SetupStateObservingView 
     .list-container {
         text-align: left;
         width: 30em;
-        margin-left: 50%;
-        transform: translateX(-50%);
+        max-width: 90%;
+        margin: auto;
     }
 
     .gear-list li {
