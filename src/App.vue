@@ -150,6 +150,10 @@
         cursor: pointer;
     }
 
+    .nav-button:hover {
+        background-color: rgba(0, 0, 0, 0.05);
+    }
+
     #app {
         font-family: 'Avenir', Helvetica, Arial, sans-serif;
         -webkit-font-smoothing: antialiased;
@@ -212,6 +216,10 @@
             margin: 0;
             width: 100%;
             text-indent: 0.8em;
+        }
+
+        .nav-button:hover {
+            background-color: #444;
         }
 
         #nav {
