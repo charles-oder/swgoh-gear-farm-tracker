@@ -1,6 +1,8 @@
 <template>
     <div class="character-list">
-        <h1>Character List</h1>
+        <div class="page-title">
+            <h1>Character List</h1>
+        </div>
         <div class="list-container">
             <ul>
                 <li class="character-pane" v-for="character in characters" :key="character">
@@ -102,6 +104,10 @@ export default class GearNeededPerCharacterView extends SetupStateObservingView 
 
     h1 {
         color: #666;
+    }
+
+    .page-title {
+        text-align: center;
     }
 
     .character-list {

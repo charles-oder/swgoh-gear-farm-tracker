@@ -1,6 +1,8 @@
 <template>
     <div class="character-list">
-        <h1>Total Gear Needed</h1>
+        <div class="page-title">
+            <h1>Total Gear Needed</h1>
+        </div>
         <div class="list-container">
             <ul class="gear-list">
                 <li v-for="gearSlot in allNeededGear()" :key="gearSlot.name">
@@ -101,6 +103,10 @@ export default class GearNeededPerCharacterView extends SetupStateObservingView 
 
     h1 {
         color: #666;
+    }
+
+    .page-title {
+        text-align: center;
     }
 
     .character-list {

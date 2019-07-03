@@ -1,7 +1,9 @@
 <template>
     <div class="character-list">
-        <h1>Locations to Farm</h1>
-        <ul>
+        <div class="page-title">
+            <h1>Locations to Farm</h1>
+        </div>
+        <ul class="locations-to-farm-list">
             <li v-for="location in locationsToDisplay()" :key="location">
                 {{location}}
                 <ul>
@@ -156,5 +158,13 @@
 
     h1 {
         color: #666;
+    }
+
+    .page-title {
+        text-align: center;
+    }
+
+    .locations-to-farm-list {
+        text-align: center;
     }
 </style>

@@ -1,6 +1,8 @@
 <template>
     <div class="character-list">
-        <h1>Character List</h1>
+        <div class="page-title">
+            <h1>Character List</h1>
+        </div>
         <div class="filter-controls">
                 <input name="focus"
                               class="search-box"
@@ -32,7 +34,6 @@ import {Component, Vue, Watch} from 'vue-property-decorator';
 import CharacterList from '@/CharacterList/CharacterList';
 import CharacterSetupView from '@/CharacterList/CharacterSetupView.vue';
 import SetupStateManager from '@/state/SetupStateManager';
-import AppLog from '@/AppLog';
 
 // noinspection JSUnusedGlobalSymbols export default Required by Vue
 @Component({
@@ -99,6 +100,10 @@ export default class CharacterListView extends Vue {
         color: #666;
     }
 
+    .page-title {
+        text-align: center;
+    }
+
     .search-box,.close-icon {
         position: relative;
         padding: 5px;
@@ -142,6 +147,7 @@ export default class CharacterListView extends Vue {
         display: none;
     }
     .filter-controls {
+        text-align: center;
         padding: 10px;
     }
 </style>

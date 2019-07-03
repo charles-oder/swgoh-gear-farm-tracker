@@ -1,6 +1,8 @@
 <template>
     <div class="gear-on-hand-list">
-        <h1>Gear On Hand</h1>
+        <div class="page-title">
+            <h1>Gear On Hand</h1>
+        </div>
         <div class="list-container">
             <ul>
                 <li v-for="gear in allGearNames()" :key="gear">
@@ -46,6 +48,10 @@ export default class GearOnHand extends Vue {
 
     h1 {
         color: #666;
+    }
+
+    .page-title {
+        text-align: center;
     }
 
     .gear-on-hand-list {

@@ -1,6 +1,8 @@
 <template>
     <div class="character-list">
-        <h1>Gear to Farm</h1>
+        <div class="page-title">
+            <h1>Gear to Farm</h1>
+        </div>
         <ul>
             <li v-for="gearSlot in displayNeedList()" :key="gearSlot.name">
                 <FarmListLineItem :name="gearSlot.name" :amount="gearSlot.amount"/>
@@ -124,4 +126,9 @@ export default class GearToFarm extends SetupStateObservingView {
     h1 {
         color: #666;
     }
+
+    .page-title {
+        text-align: center;
+    }
+
 </style>

@@ -121,6 +121,10 @@
 
 <style lang="scss">
 
+    .navigation-menu {
+        text-align: center;
+    }
+
     .menu-button {
         visibility: hidden;
         position: absolute;
@@ -144,18 +148,9 @@
         background-color: rgba(0, 0, 0, 0.05);
     }
 
-    #app {
-        font-family: 'Avenir', Helvetica, Arial, sans-serif;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        text-align: center;
-        color: #2c3e50;
-    }
-
     #nav {
-        padding: 30px;
         display: block;
-
+        padding: 0;
         a {
             font-weight: bold;
             color: #f4cbb9;
