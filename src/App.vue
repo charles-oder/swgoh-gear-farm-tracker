@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <div class="menu-button" @click="openMenu()">Menu</div>
-        <div id="nav" :class="menuClass()">
+        <div id="nav" :class="menuClass">
             <div class="nav-button close-button" @click="closeMenu()">
                 <a href="#">Close</a>
             </div>
@@ -64,7 +64,7 @@
     export default class App extends Vue {
 
         private isAutoSaveOn: boolean = SetupStateManager.shared.isAutoSaveToCloudOn;
-        private menuOpen: boolean = false;
+        private menuClass: string = 'menu-initial';
 
         protected mounted() {
             this.$ga.event('app', 'launch');
@@ -75,15 +75,11 @@
         }
 
         private closeMenu() {
-            this.menuOpen = false;
+            this.menuClass = 'menu-closed';
         }
 
         private openMenu() {
-            this.menuOpen = true;
-        }
-
-        private menuClass() {
-            return this.menuOpen ? 'menu-open' : 'menu-closed';
+            this.menuClass = 'menu-open';
         }
 
         private fetchCharacterData() {
@@ -186,11 +182,18 @@
         }
 
         .menu-open {
-            visibility: visible;
+            animation: slideLeft 0.2s ease-in;
+            animation-fill-mode: forwards;
         }
 
         .menu-closed {
-            visibility: hidden;
+            transform: translateX(100%);
+            animation: slideRight 0.2s ease-in;
+            animation-fill-mode: forwards;
+        }
+
+        .menu-initial {
+            transform: translateX(100%);
         }
 
         .menu-button {
@@ -221,6 +224,26 @@
                     background-color: #666;
                 }
             }
+        }
+    }
+
+    @keyframes slideLeft {
+        0% {
+            transform: translateX(100%);
+        }
+
+        100% {
+            transform: translateX(0);
+        }
+    }
+
+    @keyframes slideRight {
+        0% {
+            transform: translateX(0);
+        }
+
+        100% {
+            transform: translateX(100%);
         }
     }
 
