@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <div class="menu-button" @click="openMenu()">Menu</div>
+        <div class="menu-button" @click="openMenu()"></div>
         <div id="nav" :class="menuClass">
             <div class="nav-button close-button" @click="closeMenu()">
                 <a href="#">Close</a>
@@ -132,9 +132,13 @@
         visibility: hidden;
         position: absolute;
         padding: 20px;
-        top: 0;
-        right: 0;
+        top: 10px;
+        right: 10px;
         cursor: pointer;
+        background-image: url('./assets/menu-icon.png');
+        background-size:     cover;                      /* <------ */
+        background-repeat:   no-repeat;
+        background-position: center center;              /* optional, center the image */
     }
 
     .nav-button {
