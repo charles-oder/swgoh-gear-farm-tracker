@@ -96,6 +96,7 @@
 
     .modal-dialog {
         position: fixed;
+        text-align: center;
         top: 0;
         left: 0;
         width: 100vw;
