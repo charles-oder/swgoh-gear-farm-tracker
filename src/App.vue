@@ -145,11 +145,11 @@
     }
 
     .nav-button {
-        padding:0.8em;
+        padding: 0.8em;
         display: inline-block;
         cursor: pointer;
-
     }
+
     #app {
         font-family: 'Avenir', Helvetica, Arial, sans-serif;
         -webkit-font-smoothing: antialiased;
@@ -208,8 +208,10 @@
         }
 
         .nav-button {
+            padding: 0.8em 0;
             margin: 0;
             width: 100%;
+            text-indent: 0.8em;
         }
 
         #nav {
@@ -217,7 +219,7 @@
             position: fixed;
             top: 0;
             right: 0;
-            width: 60%;
+            width: 70%;
             max-width: 20em;
             height: 100%;
             background-color: #333;
