@@ -1,7 +1,7 @@
 0<template>
-    <div :class="alertVisibility()">
+    <div :class="alertVisibilityClass">
         <div class="message-text">{{displayMessage()}} <a :href="this.displayLink()">{{displayLinkText()}}</a></div>
-        <div class="closeButton" @click="close">X</div>
+        <div class="banner-close-button" @click="close">X</div>
     </div>
 </template>
 
@@ -12,11 +12,12 @@
     @Component
     export default class AlertView extends Vue {
 
-        private visible: boolean = false;
-        private isError: boolean = false;
+        private alertVisibilityClass: string = 'alert-container initial message';
         private message?: string;
         private link?: string;
         private linkText?: string;
+        private autoCloseTime?: number;
+        private readonly autoCloseTimeout: number = 5000;
 
 
         // noinspection JSUnusedGlobalSymbols Lifecycle Method
@@ -26,10 +27,11 @@
         }
 
         public close() {
-            this.message = undefined;
-            this.link = undefined;
-            this.linkText = undefined;
-            this.visible = false;
+            this.autoCloseTime = undefined;
+            if (!this.alertVisibilityClass.includes('visible')) {
+                return;
+            }
+            this.alertVisibilityClass = this.alertVisibilityClass.replace('visible', 'hidden');
         }
 
         public showError(message: string, link?: string, linkText?: string) {
@@ -37,8 +39,8 @@
             this.message = message;
             this.link = link;
             this.linkText = linkText === undefined ? link : linkText;
-            this.visible = true;
-            this.isError = true;
+            this.alertVisibilityClass = 'alert-container visible error';
+            this.startAutoCloseTimer();
         }
 
         public showMessage(message: string, link?: string, linkText?: string) {
@@ -46,8 +48,18 @@
             this.message = message;
             this.link = link;
             this.linkText = linkText === undefined ? link : linkText;
-            this.visible = true;
-            this.isError = false;
+            this.alertVisibilityClass = 'alert-container visible message';
+            this.startAutoCloseTimer();
+        }
+
+        private startAutoCloseTimer() {
+            this.autoCloseTime = new Date().getTime() + (this.autoCloseTimeout - 100);
+            setTimeout(() => {
+                const now = new Date().getTime();
+                if (this.autoCloseTime != undefined && now > this.autoCloseTime) {
+                    this.close()
+                }
+            }, this.autoCloseTimeout);
         }
 
         private displayMessage(): string | undefined {
@@ -62,11 +74,6 @@
             return this.linkText;
         }
 
-        private alertVisibility(): string {
-            let className = this.visible ? 'alertContainerVisible' : 'alertContainerHidden';
-            className += this.isError ? ' error' : ' message';
-            return className;
-        }
     }
 
 </script>
@@ -82,7 +89,7 @@
         }
     }
 
-    .alertContainerVisible, .alertContainerHidden {
+    .alert-container {
         position: fixed;
         top: 0;
         left: 0;
@@ -91,38 +98,70 @@
         padding: 20px 0;
         z-index: 998;
     }
-    .alertContainerVisible {
-        visibility: visible;
+
+    .visible {
+        transform: translateY(0);
         pointer-events: auto;
+        animation: slideDown 0.5s ease-out;
     }
-    .alertContainerHidden {
-        visibility: hidden;
+
+    .hidden {
+        transform: translateY(-100%);
+        pointer-events: none;
+        animation: slideUp 0.5s ease-in;
+    }
+
+    .initial {
+        transform: translateY(-100%);
         pointer-events: none;
     }
-    .closeButton {
+
+    .banner-close-button {
         position: absolute;
         top: 50%;
         transform: translateY(-50%);
         right: 0;
-        float: right;
         cursor: pointer;
         padding: 20px;
+        z-index: 999;
     }
 
     .message {
         background-color: palegreen;
-        animation: dock 2s linear 1 alternate;
     }
 
     .error {
         background-color: lightpink;
-        animation: dock 2s linear 1 alternate;
     }
 
     .message-text {
         padding: 0 2em;
         white-space: pre;
         vertical-align: center;
+    }
+
+    @keyframes slideDown {
+        0% {
+            opacity: 0;
+            transform: translateY(-100%);
+        }
+
+        100% {
+            opacity: 100%;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes slideUp {
+        0% {
+            opacity: 100%;
+            transform: translateY(0);
+        }
+
+        100% {
+            opacity: 0;
+            transform: translateY(-100%);
+        }
     }
 
 </style>
