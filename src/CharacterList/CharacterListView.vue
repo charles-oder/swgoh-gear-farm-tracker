@@ -1,14 +1,12 @@
 <template>
     <div class="character-list">
-        <div class="page-title">
-            <h1>Character List</h1>
-        </div>
-        <div class="filter-controls">
+        <ContentPage pageTitle="Character List">
+            <div class="filter-controls">
                 <input name="focus"
-                              class="search-box"
-                              v-model="nameFilter"
-                              type="text"
-                              placeholder="Search by Name" />
+                       class="search-box"
+                       v-model="nameFilter"
+                       type="text"
+                       placeholder="Search by Name" />
                 <button class="close-icon" type="reset" @click="clearFilter()"></button>
                 <select class="search-box" v-model="categoryFilter">
                     <option selected>All</option>
@@ -20,12 +18,13 @@
                         <input v-model="hideUnselected" type="checkbox"/>
                     </label>
                 </div>
-        </div>
-        <ul>
-            <li v-for="character in characters()" :key="character">
-                <CharacterSetupView :characterName="character"/>
-            </li>
-        </ul>
+            </div>
+            <ul>
+                <li v-for="character in characters()" :key="character">
+                    <CharacterSetupView :characterName="character"/>
+                </li>
+            </ul>
+        </ContentPage>
     </div>
 </template>
 
@@ -34,10 +33,12 @@ import {Component, Vue, Watch} from 'vue-property-decorator';
 import CharacterList from '@/CharacterList/CharacterList';
 import CharacterSetupView from '@/CharacterList/CharacterSetupView.vue';
 import SetupStateManager from '@/state/SetupStateManager';
+import ContentPage from '@/views/ContentPage.vue';
 
 // noinspection JSUnusedGlobalSymbols export default Required by Vue
 @Component({
     components: {
+        ContentPage,
         CharacterSetupView,
 
     },

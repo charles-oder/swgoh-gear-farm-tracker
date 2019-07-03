@@ -1,15 +1,14 @@
 <template>
     <div class="gear-on-hand-list">
-        <div class="page-title">
-            <h1>Gear On Hand</h1>
-        </div>
-        <div class="list-container">
-            <ul>
-                <li v-for="gear in allGearNames()" :key="gear">
-                    <GearOnHandLineItem :gearName="gear"/>
-                </li>
-            </ul>
-        </div>
+        <ContentPage pageTitle="Gear On Hand">
+            <div class="list-container">
+                <ul>
+                    <li v-for="gear in allGearNames()" :key="gear">
+                        <GearOnHandLineItem :gearName="gear"/>
+                    </li>
+                </ul>
+            </div>
+        </ContentPage>
     </div>
 </template>
 
@@ -17,10 +16,12 @@
 import {Component, Vue} from 'vue-property-decorator';
 import {GearList} from '@/data/GearList';
 import GearOnHandLineItem from '@/gear-on-hand/GearOnHandLineItem.vue';
+import ContentPage from '@/views/ContentPage.vue';
 
 // noinspection JSUnusedGlobalSymbols export default Required by Vue
 @Component({
     components: {
+        ContentPage,
         GearOnHandLineItem,
     },
 })

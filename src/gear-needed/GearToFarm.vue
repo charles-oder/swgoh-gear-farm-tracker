@@ -1,13 +1,12 @@
 <template>
     <div class="character-list">
-        <div class="page-title">
-            <h1>Gear to Farm</h1>
-        </div>
-        <ul>
-            <li v-for="gearSlot in displayNeedList()" :key="gearSlot.name">
-                <FarmListLineItem :name="gearSlot.name" :amount="gearSlot.amount"/>
-            </li>
-        </ul>
+        <ContentPage pageTitle="Gear to Farm">
+            <ul>
+                <li v-for="gearSlot in displayNeedList()" :key="gearSlot.name">
+                    <FarmListLineItem :name="gearSlot.name" :amount="gearSlot.amount"/>
+                </li>
+            </ul>
+        </ContentPage>
     </div>
 </template>
 
@@ -22,10 +21,12 @@ import GearOnHandState from '../state/GearOnHandState';
 import FarmListLineItem from '@/gear-needed/GearToFarmLineItem.vue';
 import SetupState from '@/state/SetupState';
 import SetupStateObservingView from '@/components/SetupStateObservingView.vue';
+import ContentPage from '@/views/ContentPage.vue';
 
 // noinspection JSUnusedGlobalSymbols export default Required by Vue
 @Component({
     components: {
+        ContentPage,
         FarmListLineItem,
         CharacterSetupView,
 

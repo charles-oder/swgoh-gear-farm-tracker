@@ -1,16 +1,15 @@
 <template>
     <div class="character-list">
-        <div class="page-title">
-            <h1>Total Gear Needed</h1>
-        </div>
-        <div class="list-container">
-            <ul class="gear-list">
-                <li v-for="gearSlot in allNeededGear()" :key="gearSlot.name">
-                    <div class="amount">{{gearSlot.amount}}</div>
-                    {{gearSlot.name}}
-                </li>
-            </ul>
-        </div>
+        <ContentPage pageTitle="Total Gear Needed">
+            <div class="list-container">
+                <ul class="gear-list">
+                    <li v-for="gearSlot in allNeededGear()" :key="gearSlot.name">
+                        <div class="amount">{{gearSlot.amount}}</div>
+                        {{gearSlot.name}}
+                    </li>
+                </ul>
+            </div>
+        </ContentPage>
     </div>
 </template>
 
@@ -24,10 +23,12 @@ import {GearIngredient} from '@/data/GearIngredient';
 import CharacterSetupState from '../state/CharacterSetupState';
 import SetupStateObservingView from '@/components/SetupStateObservingView.vue';
 import SetupState from '@/state/SetupState';
+import ContentPage from '@/views/ContentPage.vue';
 
 // noinspection JSUnusedGlobalSymbols export default Required by Vue
 @Component({
     components: {
+        ContentPage,
         CharacterSetupView,
 
     },

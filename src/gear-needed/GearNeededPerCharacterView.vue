@@ -1,21 +1,20 @@
 <template>
     <div class="character-list">
-        <div class="page-title">
-            <h1>Character List</h1>
-        </div>
-        <div class="list-container">
-            <ul>
-                <li class="character-pane" v-for="character in characters" :key="character">
-                    <h2>{{character}}</h2>
-                    <ul class="gear-list">
-                        <li v-for="gearSlot in flattenGearList(character)" :key="gearSlot.name">
-                            <div class="amount">{{gearSlot.amount}}</div>
-                            {{gearSlot.name}}
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
+        <ContentPage pageTitle="Character List">
+            <div class="list-container">
+                <ul>
+                    <li class="character-pane" v-for="character in characters" :key="character">
+                        <h2>{{character}}</h2>
+                        <ul class="gear-list">
+                            <li v-for="gearSlot in flattenGearList(character)" :key="gearSlot.name">
+                                <div class="amount">{{gearSlot.amount}}</div>
+                                {{gearSlot.name}}
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </ContentPage>
     </div>
 </template>
 
@@ -28,10 +27,12 @@ import {GearList} from '@/data/GearList';
 import {GearIngredient} from '@/data/GearIngredient';
 import SetupStateObservingView from '@/components/SetupStateObservingView.vue';
 import SetupState from '@/state/SetupState';
+import ContentPage from '@/views/ContentPage.vue';
 
 // noinspection JSUnusedGlobalSymbols export default Required by Vue
 @Component({
     components: {
+        ContentPage,
         CharacterSetupView,
 
     },
