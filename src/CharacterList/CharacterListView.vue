@@ -88,11 +88,11 @@ export default class CharacterListView extends Vue {
 <style scoped lang="scss">
 
     ul {
-        width: 20em;
+        width: 90%;
+        max-width: 20em;
         list-style: none;
         padding-left: 0;
-        margin-left: 50%;
-        transform: translateX(-50%);
+        margin: auto;
     }
 
     h1 {
