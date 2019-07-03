@@ -145,8 +145,7 @@
     }
 
     .nav-button {
-        margin: 0.4em;
-        padding:0.4em;
+        padding:0.8em;
         display: inline-block;
         cursor: pointer;
 
@@ -209,6 +208,7 @@
         }
 
         .nav-button {
+            margin: 0;
             width: 100%;
         }
 
