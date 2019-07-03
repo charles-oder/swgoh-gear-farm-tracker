@@ -1,19 +1,19 @@
 import _Vue, { PluginFunction } from 'vue';
 
 declare class VueAnalytics {
-    static install(Vue: typeof _Vue, options: any): void;
-    analyticsMiddleware: any;
-    onAnalyticsReady: any;
-    event: any;
-    ecommerce: any;
-    set: any;
-    page: any;
-    query: any;
-    screenview: any;
-    time: any;
-    require: any;
-    exception: any;
-    social: any;
+    public static install(Vue: typeof _Vue, options: any): void;
+    public analyticsMiddleware: any;
+    public onAnalyticsReady: any;
+    public event: any;
+    public ecommerce: any;
+    public set: any;
+    public page: any;
+    public query: any;
+    public screenview: any;
+    public time: any;
+    public require: any;
+    public exception: any;
+    public social: any;
 }
 export default VueAnalytics;
 

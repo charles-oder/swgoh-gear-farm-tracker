@@ -6,76 +6,75 @@
 </template>
 
 <script lang="ts">
-    import {Component, Vue} from 'vue-property-decorator';
-    import AlertBus from '@/views/AlertBus';
+import {Component, Vue} from 'vue-property-decorator';
+import AlertBus from '@/views/AlertBus';
 
-    @Component
-    export default class AlertView extends Vue {
+@Component
+export default class AlertView extends Vue {
 
-        private alertVisibilityClass: string = 'alert-container initial message';
-        private message?: string;
-        private link?: string;
-        private linkText?: string;
-        private autoCloseTime?: number;
-        private readonly autoCloseTimeout: number = 5000;
+    private alertVisibilityClass: string = 'alert-container initial message';
+    private message?: string;
+    private link?: string;
+    private linkText?: string;
+    private autoCloseTime?: number;
+    private readonly autoCloseTimeout: number = 5000;
 
 
-        // noinspection JSUnusedGlobalSymbols Lifecycle Method
-        public mounted() {
-            AlertBus.shared.alertMessage = this.showMessage;
-            AlertBus.shared.alertError = this.showError;
-        }
-
-        public close() {
-            this.autoCloseTime = undefined;
-            if (!this.alertVisibilityClass.includes('visible')) {
-                return;
-            }
-            this.alertVisibilityClass = this.alertVisibilityClass.replace('visible', 'hidden');
-        }
-
-        public showError(message: string, link?: string, linkText?: string) {
-            this.close();
-            this.message = message;
-            this.link = link;
-            this.linkText = linkText === undefined ? link : linkText;
-            this.alertVisibilityClass = 'alert-container visible error';
-            this.startAutoCloseTimer();
-        }
-
-        public showMessage(message: string, link?: string, linkText?: string) {
-            this.close();
-            this.message = message;
-            this.link = link;
-            this.linkText = linkText === undefined ? link : linkText;
-            this.alertVisibilityClass = 'alert-container visible message';
-            this.startAutoCloseTimer();
-        }
-
-        private startAutoCloseTimer() {
-            this.autoCloseTime = new Date().getTime() + (this.autoCloseTimeout - 100);
-            setTimeout(() => {
-                const now = new Date().getTime();
-                if (this.autoCloseTime != undefined && now > this.autoCloseTime) {
-                    this.close()
-                }
-            }, this.autoCloseTimeout);
-        }
-
-        private displayMessage(): string | undefined {
-            return this.message;
-        }
-
-        private displayLink(): string | undefined {
-            return this.link;
-        }
-
-        private displayLinkText(): string | undefined {
-            return this.linkText;
-        }
-
+    // noinspection JSUnusedGlobalSymbols Lifecycle Method
+    public mounted() {
+        AlertBus.shared.alertMessage = this.showMessage;
+        AlertBus.shared.alertError = this.showError;
     }
 
+    public close() {
+        this.autoCloseTime = undefined;
+        if (!this.alertVisibilityClass.includes('visible')) {
+            return;
+        }
+        this.alertVisibilityClass = this.alertVisibilityClass.replace('visible', 'hidden');
+    }
+
+    public showError(message: string, link?: string, linkText?: string) {
+        this.close();
+        this.message = message;
+        this.link = link;
+        this.linkText = linkText === undefined ? link : linkText;
+        this.alertVisibilityClass = 'alert-container visible error';
+        this.startAutoCloseTimer();
+    }
+
+    public showMessage(message: string, link?: string, linkText?: string) {
+        this.close();
+        this.message = message;
+        this.link = link;
+        this.linkText = linkText === undefined ? link : linkText;
+        this.alertVisibilityClass = 'alert-container visible message';
+        this.startAutoCloseTimer();
+    }
+
+    private startAutoCloseTimer() {
+        this.autoCloseTime = new Date().getTime() + (this.autoCloseTimeout - 100);
+        setTimeout(() => {
+            const now = new Date().getTime();
+            if (this.autoCloseTime !== undefined && now > this.autoCloseTime) {
+                this.close();
+            }
+        }, this.autoCloseTimeout);
+    }
+
+    private displayMessage(): string | undefined {
+        return this.message;
+    }
+
+    private displayLink(): string | undefined {
+        return this.link;
+    }
+
+    private displayLinkText(): string | undefined {
+        return this.linkText;
+    }
+
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
