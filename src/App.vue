@@ -216,6 +216,7 @@
             background-color: #333;
             padding: 0;
             text-align: left;
+            overflow: scroll;
             a {
                 color: #CCC;
                 width: 100%;
