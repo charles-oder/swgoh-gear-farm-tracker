@@ -1,9 +1,9 @@
 <template>
     <div id="app">
-        <NavigationMenu />
         <AlertView />
         <ModalDialog />
         <PullCharacterData />
+        <NavigationMenu />
         <router-view id="page-container"/>
     </div>
 </template>
