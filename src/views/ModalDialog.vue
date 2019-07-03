@@ -2,9 +2,9 @@
     <div :class="modalVisibility">
         <div class="container">
             <div class="message">{{displayMessage()}}</div>
-            <div class="buttonPanel">
-                <div class="positiveButton" @click="positiveButtonClicked">{{displayPositiveTitle()}}</div>
-                <div class="negativeButton" @click="negativeButtonClicked">{{displayNegativeTitle()}}</div>
+            <div class="button-panel">
+                <div class="dialog-button positive-button" @click="positiveButtonClicked">{{displayPositiveTitle()}}</div>
+                <div class="dialog-button negative-button" @click="negativeButtonClicked">{{displayNegativeTitle()}}</div>
             </div>
         </div>
     </div>
@@ -85,7 +85,7 @@
 
 
         get modalVisibility(): string {
-            return this.visible ? 'modalVisible' : 'modalInvisible';
+            return this.visible ? 'modal-dialog dialog-visible' : 'modal-dialog dialog-invisible';
         }
     }
 
@@ -94,55 +94,63 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 
-    .modalVisible, .modalInvisible {
+    .modal-dialog {
         position: fixed;
         top: 0;
         left: 0;
         width: 100vw;
         height: 100vh;
-        text-align: center;
-        padding: 20px;
         background-color: rgba(0, 0, 0, 0.2);
         visibility: visible;
         pointer-events: auto;
         z-index: 999;
     }
-    .modalVisible {
+
+    .dialog-visible {
         visibility: visible;
         pointer-events: auto;
     }
-    .modalInvisible {
+
+    .dialog-invisible {
         visibility: hidden;
         pointer-events: none;
     }
+
     .container {
+        position: relative;
+        top: 25%;
         background-color: white;
-        width: 300px;
-        margin: 15% auto auto auto;
+        width: 70%;
+        max-width: 300px;
+        margin: auto;
         padding: 20px;
         border-radius: 5px;
     }
 
-    .positiveButton, .negativeButton {
+    .dialog-button {
         padding: 5px;
         margin: 10px;
-        width: 100px;
+        width: 30%;
         cursor: pointer;
         color: white;
         font-weight: bold;
     }
-    .positiveButton {
+
+    .positive-button {
         background-color: #01681a;
         float: left;
     }
-    .negativeButton {
+
+    .negative-button {
         background-color: darkred;
         float: right;
     }
-    .buttonPanel {
+
+    .button-panel {
         background-color: white;
         height: 30px;
     }
+
     .message {
     }
 </style>
