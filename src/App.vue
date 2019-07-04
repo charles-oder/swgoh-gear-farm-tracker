@@ -37,4 +37,20 @@
         margin: 0;
     }
 
+    #page-container {
+        position: fixed;
+        width: 100vw;
+        height: calc(100vh - 40px);
+        top: 90px;
+        left: 0;
+        overflow: auto;
+    }
+
+    @media only screen and (max-width: 1020px) {
+        #page-container {
+            top: 0;
+            height: 100vh;
+        }
+    }
+
 </style>

@@ -151,4 +151,5 @@ export default class CharacterListView extends Vue {
         text-align: center;
         padding: 10px;
     }
+
 </style>

@@ -127,7 +127,7 @@
 
     .menu-button {
         visibility: hidden;
-        position: absolute;
+        position: fixed;
         padding: 20px;
         top: 10px;
         right: 10px;
@@ -150,7 +150,13 @@
 
     #nav {
         display: block;
+        position: fixed;
+        top: 0;
+        right: 0;
+        height: 90px;
+        width: 100%;
         padding: 0;
+        background-color: white;
         a {
             font-weight: bold;
             color: #f4cbb9;
