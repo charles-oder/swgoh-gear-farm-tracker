@@ -40,7 +40,7 @@
     #page-container {
         position: fixed;
         width: 100vw;
-        height: calc(100vh - 40px);
+        height: calc(100vh - 90px);
         top: 90px;
         left: 0;
         overflow: auto;
