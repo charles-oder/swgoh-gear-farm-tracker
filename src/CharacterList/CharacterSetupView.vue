@@ -128,7 +128,10 @@ export default class CharacterSetupView extends SetupStateObservingView {
     }
 
     .character-listing {
-        margin: 2em;
+        margin: 1em;
+        display: inline;
+        float: left;
+        max-width: 16em;
         background-color: #c4f5ff;
     }
 
@@ -153,4 +156,15 @@ export default class CharacterSetupView extends SetupStateObservingView {
         text-align: right;
         display: block;
     }
+
+    @media only screen and (max-width: 600px) {
+        .character-listing {
+            margin: 1em auto;
+            display: block;
+            float: none;
+            max-width: 16em;
+            background-color: #c4f5ff;
+        }
+    }
+
 </style>

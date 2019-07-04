@@ -91,7 +91,6 @@ export default class CharacterListView extends Vue {
 
     ul {
         width: 90%;
-        max-width: 20em;
         list-style: none;
         padding-left: 0;
         margin: auto;
